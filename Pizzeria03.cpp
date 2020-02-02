@@ -1,4 +1,5 @@
 #include <iostream>
+#include <queue>
 #include <string>
 
 // Declaracion de un define
@@ -7,29 +8,10 @@
 using namespace std;
 
 // Probando comentario
-enum mainDish
-{
-    pizza,
-    pasta,
-    lasagna
-};
-enum drink
-{
-    beer,
-    soda,
-    tea
-};
-enum starter
-{
-    garlicBread,
-    pizzaRolls,
-    cheeseSticks
-};
-enum paymentType
-{
-    cash,
-    card
-};
+enum mainDish {pizza, pasta, lasagna};
+enum drink {beer, soda, tea};
+enum starter {garlicBread, pizzaRolls, cheeseSticks};
+enum paymentType {cash, card};
 
 // Declaraciones de estructuras
 struct address
@@ -69,6 +51,9 @@ int idOrder = 1;
 //prototipos
 bool loginUser(void);
 void printMenu(void);
+void addOrder(houseOrder *array);
+void addOrder(delivery *array);
+
 
 //if(!s)  if(s == NULL)
 //if(s)   if(s != NULL)
@@ -103,17 +88,41 @@ int main(void)
             addOrder(hArray);
             break;
         case 3:
+            // ver ordenes a domicilio
             break;
         case 4:
+            // ver ordenes en restaurante
             break;
-        case 0:
-            // nada:
+        case 5:
+            // Despachar ordenes a domicilio
+            break;
+        case 6:
+            // Despachar ordenes en restaurante
+            break;
+        case 7:
+            // Tiempo promedio de espera a domicilio
+            break;
+        case 8:
+            // Tiempo promedio de espera en restaurante
+            break;
+        case 9:
+            // Cancelar orden a domicilio o restaurante, solo admin
+            break;
+        case 10:
+            // Calcular total de ventas
+            break;
+        case 11:
+            // Cambiar de usuario
+            break;
+        case 12:
+            cout << "Salida exitosa, gracias por preferirnos!" << endl;
             break;
         default:
+            cout << "Opcion invalida" << endl;
             break;
         }
 
-    } while (option != 0);
+    } while (option != 12);
 
     return 0;
 }
@@ -157,18 +166,26 @@ bool loginUser(void)
 
 void printMenu(void)
 {
-    cout << "SISTEMA DE DESPACHO PIZZERIA LA ITALIANA" << endl;
+    cout << endl << "SISTEMA DE DESPACHO PIZZERIA LA ITALIANA" << endl;
     cout << "1. Agregar ordenes a domicilio" << endl;
     cout << "2. Agregar ordenes en restaurante" << endl;
     cout << "3. Ver ordenes a domicilio" << endl;
     cout << "4. Ver ordenes en restaurante" << endl;
+    cout << "5. Despachar ordenes a domicilio" << endl;
+    cout << "6. Despachar ordenes a restaurante" << endl;
+    cout << "7. Ver tiempo promedio de espera domicilio" << endl;
+    cout << "8. Ver tiempo promedio de espera restaurante" << endl;
+    cout << "9. Cancelar orden (domicilio o restaurante, solo admin)" << endl;
+    cout << "10. Calcular total de ventas" << endl;
+    cout << "11. Cambiar de usuario" << endl;
+    cout << "12. Salir" << endl;
     cout << "Su option:\t";
 }
 
 void addOrder(delivery *array)
 {
     int size = 0;
-    cout << "Cantidad de pedidos a ingresar: ";
+    cout << endl << "Cantidad de pedidos a ingresar: ";
     cin >> size;
     cin.ignore();
 
@@ -176,7 +193,7 @@ void addOrder(delivery *array)
     for (int i = 0; i < size; i++)
     {
         int aux = 0;
-        cout << "Nombre:\t";
+        cout << endl << "Nombre:\t";
         getline(cin, array[i].deliveryInfo.name);
         cout << "Direccion" << endl;
         cout << "Colonia:\t";
@@ -261,7 +278,7 @@ void addOrder(delivery *array)
 void addOrder(houseOrder *array)
 {
     int size = 0;
-    cout << "Cantidad de pedidos a ingresar: ";
+    cout << endl << "Cantidad de pedidos a ingresar: ";
     cin >> size;
     cin.ignore();
 
@@ -269,7 +286,7 @@ void addOrder(houseOrder *array)
     for (int i = 0; i < size; i++)
     {
         int aux = 0;
-        cout << "Nombre:\t";
+        cout << endl << "Nombre:\t";
         getline(cin, array[i].houseInfo.name);
         cout << "Personas por mesa:\t";
         cin, array[i].pTable;
