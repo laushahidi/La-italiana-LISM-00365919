@@ -101,6 +101,9 @@ int main(void)
             break;
         case 3:
             // ver ordenes a domicilio
+            if(delOrder.empty){
+                cout <<
+            }
             seeOrders(delOrder);            
             break;
         case 4:
@@ -368,7 +371,30 @@ void seeOrders(vector <delivery> delOrder){
 }
 
 void seeOrders(vector <houseOrder> hOrder){
+    for(int i = 0; i < hOrder.size(); i++){
+        cout << endl << "Nombre:\t" << hOrder[i].houseInfo.name << endl;
+        
+        cout << "Entrada" << endl;
+        cout << "Pan con ajo. Cantidad: " << hOrder[i].houseInfo.qGarlic << endl;
+        cout << "Pizza rolls. Cantidad: " << hOrder[i].houseInfo.qPizzaRolls << endl;
+        cout << "Palitos de queso. Cantidad: " << hOrder[i].houseInfo.qCheese << endl;
 
+        cout << "Plato principal" << endl;
+        cout << "Pizza. Cantidad: " << hOrder[i].houseInfo.qPizza << endl;
+        cout << "Pasta. Cantidad: " << hOrder[i].houseInfo.qPasta << endl;
+        cout << "Lasagna. Cantidad: " << hOrder[i].houseInfo.qLasagna << endl;
+
+        cout << "Bebida" << endl;
+        cout << "Cerveza. Cantidad: " << hOrder[i].houseInfo.qBeer << endl;
+        cout << "Soda. Cantidad: " << hOrder[i].houseInfo.qSoda << endl;
+        cout << "Te helado. Cantidad: " << hOrder[i].houseInfo.qTea << endl;
+
+        cout << hOrder[i].houseInfo.idOrder << endl;
+
+        cout << "Tipo de pago: " << hOrder[i].houseInfo.pay << endl;
+
+        cout << "Monto: " << hOrder[i].houseInfo.total << endl;
+    }
 }
 
 /*void searchByName(delivery *array, int size)
