@@ -60,8 +60,8 @@ bool loginUser(void);
 void printMenu(void);
 void addOrder(vector <delivery> *delOrder);
 void addOrder(vector <houseOrder> *hOrder);
-//void seeOrders(vector <delivery> *delOrder);
-//void seeOrders(vector <houseOrder> *hOrder);
+void seeOrders(vector <delivery> delOrder);
+void seeOrders(vector <houseOrder> hOrder);
 
 
 //if(!s)  if(s == NULL)
@@ -101,15 +101,11 @@ int main(void)
             break;
         case 3:
             // ver ordenes a domicilio
-            //seeOrders(&delOrder);
-            for(int i = 0; i < delOrder.size(); i++){
-                cout << endl << "Nombre:\t" << delOrder[i].deliveryInfo.name << endl;
-            }
-            
+            seeOrders(delOrder);            
             break;
         case 4:
             // ver ordenes en restaurante
-            //seeOrders(&hOrder);
+            seeOrders(hOrder);
             break;
         case 5:
             // Despachar ordenes a domicilio
@@ -337,12 +333,12 @@ void addOrder(vector <houseOrder> *hOrder)
 
 }
 
-/*void seeOrders(vector <delivery> *delOrder){
-    for(int i = 0; i < delOrder->size(); i++){
-        cout << endl << "Nombre:\t" << (delOrder + i)->deliveryInfo.name << endl;
-        cout << "Telefono: " << (delOrder + i)->cellphone << endl;
+void seeOrders(vector <delivery> delOrder){
+    for(int i = 0; i < delOrder.size(); i++){
+        cout << endl << "Nombre:\t" << delOrder[i].deliveryInfo.name << endl;
+        cout << "Telefono: " << delOrder[i].cellphone << endl;
         cout << "Direccion" << endl;
-        cout << "Colonia:\t" << (delOrder[i])->deliveryAddress.settlement << endl;
+        cout << "Colonia:\t" << delOrder[i].deliveryAddress.settlement << endl;
         cout << "Municipio:\t" << delOrder[i].deliveryAddress.municipality << endl;
         cout << "Departamento:\t" << delOrder[i].deliveryAddress.department << endl;
         cout << "No. casa:\t" << delOrder[i].deliveryAddress.houseNumber << endl;
@@ -371,7 +367,7 @@ void addOrder(vector <houseOrder> *hOrder)
 
 }
 
-void seeOrders(vector <houseOrder> *hOrder){
+void seeOrders(vector <houseOrder> hOrder){
 
 }
 
