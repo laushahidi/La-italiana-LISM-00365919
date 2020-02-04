@@ -63,7 +63,7 @@ bool loginUser(void);
 void printMenu(void);
 void addOrder(vector <delivery> &delOrder);
 void addOrder(vector <houseOrder> &hOrder);
-void seeOrders(int pos, vector <delivery> &delOrder);
+void seeOrders(vector <delivery> &delOrder);
 void seeOrders(vector <houseOrder> &hOrder);
 void done(vector <delivery> &delOrder, vector <delivery> &delDone, int id);
 void done(vector <houseOrder> &hOrder, vector <houseOrder> &hDone, int id);
@@ -118,7 +118,7 @@ int main(void)
                 cout << endl << "No se han agregado ordenes a domicilio nuevas" << endl;
             }
             else{
-                seeOrders(0, delOrder); 
+                seeOrders(delOrder); 
             }
                        
             break;
@@ -412,41 +412,37 @@ void addOrder(vector <houseOrder> &hOrder)
 
 }
 
-void seeOrders(int pos, vector <delivery> &delOrder){
-    if(pos == delOrder.size())
-        return;
-    else{
-
-        cout << endl << "Nombre:\t" << delOrder[pos].deliveryInfo.name << endl;
-        cout << "Telefono: " << delOrder[pos].cellphone << endl;
+void seeOrders(vector <delivery> &delOrder){
+    for(int i = 0; i < delOrder.size(); i++){
+        cout << endl << "Nombre:\t" << delOrder[i].deliveryInfo.name << endl;
+        cout << "Telefono: " << delOrder[i].cellphone << endl;
         cout << "Direccion" << endl;
-        cout << "Colonia:\t" << delOrder[pos].deliveryAddress.settlement << endl;
-        cout << "Municipio:\t" << delOrder[pos].deliveryAddress.municipality << endl;
-        cout << "Departamento:\t" << delOrder[pos].deliveryAddress.department << endl;
-        cout << "No. casa:\t" << delOrder[pos].deliveryAddress.houseNumber << endl;
+        cout << "Colonia:\t" << delOrder[i].deliveryAddress.settlement << endl;
+        cout << "Municipio:\t" << delOrder[i].deliveryAddress.municipality << endl;
+        cout << "Departamento:\t" << delOrder[i].deliveryAddress.department << endl;
+        cout << "No. casa:\t" << delOrder[i].deliveryAddress.houseNumber << endl;
 
         cout << "Entrada" << endl;
-        cout << "Pan con ajo. Cantidad: " << delOrder[pos].deliveryInfo.qGarlic << endl;
-        cout << "Pizza rolls. Cantidad: " << delOrder[pos].deliveryInfo.qPizzaRolls << endl;
-        cout << "Palitos de queso. Cantidad: " << delOrder[pos].deliveryInfo.qCheese << endl;
+        cout << "Pan con ajo. Cantidad: " << delOrder[i].deliveryInfo.qGarlic << endl;
+        cout << "Pizza rolls. Cantidad: " << delOrder[i].deliveryInfo.qPizzaRolls << endl;
+        cout << "Palitos de queso. Cantidad: " << delOrder[i].deliveryInfo.qCheese << endl;
 
         cout << "Plato principal" << endl;
-        cout << "Pizza. Cantidad: " << delOrder[pos].deliveryInfo.qPizza << endl;
-        cout << "Pasta. Cantidad: " << delOrder[pos].deliveryInfo.qPasta << endl;
-        cout << "Lasagna. Cantidad: " << delOrder[pos].deliveryInfo.qLasagna << endl;
+        cout << "Pizza. Cantidad: " << delOrder[i].deliveryInfo.qPizza << endl;
+        cout << "Pasta. Cantidad: " << delOrder[i].deliveryInfo.qPasta << endl;
+        cout << "Lasagna. Cantidad: " << delOrder[i].deliveryInfo.qLasagna << endl;
 
         cout << "Bebida" << endl;
-        cout << "Cerveza. Cantidad: " << delOrder[pos].deliveryInfo.qBeer << endl;
-        cout << "Soda. Cantidad: " << delOrder[pos].deliveryInfo.qSoda << endl;
-        cout << "Te helado. Cantidad: " << delOrder[pos].deliveryInfo.qTea << endl;
+        cout << "Cerveza. Cantidad: " << delOrder[i].deliveryInfo.qBeer << endl;
+        cout << "Soda. Cantidad: " << delOrder[i].deliveryInfo.qSoda << endl;
+        cout << "Te helado. Cantidad: " << delOrder[i].deliveryInfo.qTea << endl;
 
-        cout << "Numero de orden: " << delOrder[pos].deliveryInfo.idOrder << endl;
+        cout << "Numero de orden: " << delOrder[i].deliveryInfo.idOrder << endl;
 
-        cout << "Tipo de pago: " << delOrder[pos].deliveryInfo.pay << endl;
+        cout << "Tipo de pago: " << delOrder[i].deliveryInfo.pay << endl;
 
-        cout << "Monto: " << delOrder[pos].deliveryInfo.total << endl;
-        cout << "Tiempo de espera en minutos: " << ceil(delOrder[pos].deliveryInfo.waitingTime) << endl;
-        return seeOrders(pos + 1, delOrder);
+        cout << "Monto: " << delOrder[i].deliveryInfo.total << endl;
+        cout << "Tiempo de espera en minutos: " << ceil(delOrder[i].deliveryInfo.waitingTime) << endl;
     }
 
 }
