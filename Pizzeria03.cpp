@@ -34,6 +34,7 @@ struct mainInfo
     paymentType pay;
     int idOrder;
     float total;
+    float waitingTime;
 
 };
 
@@ -55,13 +56,19 @@ struct houseOrder
 bool isAdmin = false;
 int idOrder = 1;
 
+
 //prototipos
 bool loginUser(void);
 void printMenu(void);
-void addOrder(vector <delivery> *delOrder);
-void addOrder(vector <houseOrder> *hOrder);
-void seeOrders(vector <delivery> delOrder);
-void seeOrders(vector <houseOrder> hOrder);
+void addOrder(vector <delivery> &delOrder);
+void addOrder(vector <houseOrder> &hOrder);
+void seeOrders(vector <delivery> &delOrder);
+void seeOrders(vector <houseOrder> &hOrder);
+void done(vector <delivery> &delOrder, vector <delivery> &delDone, int id);
+void done(vector <houseOrder> &hOrder, vector <houseOrder> &hDone, int id);
+void waitTime(vector <delivery> &delOrder);
+void waitTime(vector <houseOrder> &hOrder);
+
 
 
 //if(!s)  if(s == NULL)
@@ -74,6 +81,9 @@ int main(void)
     houseOrder *hArray = NULL;
     vector <delivery> delOrder;
     vector <houseOrder> hOrder;
+    vector <delivery> delDone;
+    vector <houseOrder> hDone;
+    int idAuxD = 0, idAuxH = 0;
     
     int option = 0;
     // if(loginUser())       if(loginUser() == true)
@@ -93,40 +103,58 @@ int main(void)
         {
         // Agregar ordenes a domicilio
         case 1:
-            addOrder(&delOrder);
+            addOrder(delOrder);
             break;
         // Agregar ordenes en restaurante
         case 2:
-            addOrder(&hOrder);
+            addOrder(hOrder);
             break;
         case 3:
             // ver ordenes a domicilio
-            if(delOrder.empty){
-                cout <<
+            if(delOrder.empty()){
+                cout << endl << "No se han agregado ordenes a domicilio nuevas" << endl;
             }
-            seeOrders(delOrder);            
+            else{
+                seeOrders(delOrder); 
+            }
+                       
             break;
         case 4:
             // ver ordenes en restaurante
-            seeOrders(hOrder);
+            if(delOrder.empty()){
+                cout << endl << "No se han agregado ordenes en restaurante nuevas" << endl;
+            }
+            else{
+                seeOrders(hOrder);            
+                }
+            
             break;
         case 5:
-            // Despachar ordenes a domicilio
+            // Despachar ordenes a domicilio solo mostrar, total de ventas
+            cout << "¿Que numero de orden a domicilio desea despachar?" << endl;
+            cin >> idAuxD; cin.ignore();
+            done(delOrder, delDone, idAuxD);
             break;
         case 6:
-            // Despachar ordenes en restaurante
+            // Despachar ordenes en restaurante, total de ventas
+            cout << "¿Que numero de orden en restaurante desea despachar?" << endl;
+            cin >> idAuxH; cin.ignore();
+            done(delOrder, delDone, idAuxH);
             break;
         case 7:
-            // Tiempo promedio de espera a domicilio
+            // Tiempo promedio de espera a domicilio de las que no han sido despachadas
+            cout << "Tiempo de espera de ordenes a domicilio no despachadas: ";
+            waitTime(delOrder);
             break;
         case 8:
-            // Tiempo promedio de espera en restaurante
+            cout << "Tiempo de espera de ordenes a domicilio no despachadas: ";
+            waitTime(hOrder);
             break;
         case 9:
             // Cancelar orden a domicilio o restaurante, solo admin
             break;
         case 10:
-            // Calcular total de ventas
+            // Calcular total de ventas a domicilio + restaurante ordenes despachadas 2 vectores aux sumados de total
             break;
         case 11:
             // Cambiar de usuario
@@ -193,13 +221,13 @@ void printMenu(void)
     cout << "7. Ver tiempo promedio de espera domicilio" << endl;
     cout << "8. Ver tiempo promedio de espera restaurante" << endl;
     cout << "9. Cancelar orden (domicilio o restaurante, solo admin)" << endl;
-    cout << "10. Calcular total de ventas" << endl;
+    cout << "10. Calcular total de ventas" << endl; 
     cout << "11. Cambiar de usuario" << endl;
     cout << "12. Salir" << endl;
     cout << "Su option:\t";
 }
 
-void addOrder(vector <delivery> *delOrder)
+void addOrder(vector <delivery> &delOrder)
 {
     delivery oneOrder;
 
@@ -269,12 +297,18 @@ void addOrder(vector <delivery> *delOrder)
 
     oneOrder.deliveryInfo.total = ((oneOrder.deliveryInfo.qGarlic * 3.99) + (oneOrder.deliveryInfo.qPizzaRolls * 4.99) + (oneOrder.deliveryInfo.qCheese * 3.75) + (oneOrder.deliveryInfo.qPizza * 13.99) + (oneOrder.deliveryInfo.qPasta * 5.55) + (oneOrder.deliveryInfo.qLasagna * 6.25) + (oneOrder.deliveryInfo.qBeer * 1.99) + (oneOrder.deliveryInfo.qSoda * 0.95) + (oneOrder.deliveryInfo.qTea *1.15));
     cout << "Monto: " << oneOrder.deliveryInfo.total + (oneOrder.deliveryInfo.total * 0.13) << endl;
-    delOrder->insert(delOrder->end(), oneOrder);
+    cout << "Numero de orden: " << oneOrder.deliveryInfo.idOrder << endl;
+    oneOrder.deliveryInfo.waitingTime = (((oneOrder.deliveryInfo.qGarlic + oneOrder.deliveryInfo.qPizzaRolls + oneOrder.deliveryInfo.qCheese) * 1.10) + ((oneOrder.deliveryInfo.qPizza + oneOrder.deliveryInfo.qPasta + oneOrder.deliveryInfo.qLasagna) * 1.5) + ((oneOrder.deliveryInfo.qBeer + oneOrder.deliveryInfo.qSoda + oneOrder.deliveryInfo.qTea) * 1.35) + 15);
+    cout << "Tiempo de espera en minutos: " << oneOrder.deliveryInfo.waitingTime << endl;
+    delOrder.push_back(oneOrder);
+
+    //Domicilio: (cantidad de entradas * 1.10 + cantidad de platos principales * 1.5 + cantidad de bebidas * 1.35) + 15
+
 
     
 }
 
-void addOrder(vector <houseOrder> *hOrder)
+void addOrder(vector <houseOrder> &hOrder)
 {
     houseOrder oneOrder;
     int aux = 0;
@@ -316,6 +350,7 @@ void addOrder(vector <houseOrder> *hOrder)
     cout << "Te helado. Cantidad: ";
     cin >> oneOrder.houseInfo.qTea;
     cin.ignore();
+
     oneOrder.houseInfo.idOrder = idOrder++;
 
     cout << "Tipo de pago" << endl;
@@ -332,11 +367,16 @@ void addOrder(vector <houseOrder> *hOrder)
 
     oneOrder.houseInfo.total = ((oneOrder.houseInfo.qGarlic * 3.99) + (oneOrder.houseInfo.qPizzaRolls * 4.99) + (oneOrder.houseInfo.qCheese * 3.75) + (oneOrder.houseInfo.qPizza * 13.99) + (oneOrder.houseInfo.qPasta * 5.55) + (oneOrder.houseInfo.qLasagna * 6.25) + (oneOrder.houseInfo.qBeer * 1.99) + (oneOrder.houseInfo.qSoda * 0.95) + (oneOrder.houseInfo.qTea *1.15));
     cout << "Monto: $" << oneOrder.houseInfo.total + (oneOrder.houseInfo.total * 0.13) << endl;
-    hOrder->insert(hOrder->end(), oneOrder);
+    cout << "Numero de orden: " << oneOrder.houseInfo.idOrder << endl;
+
+    oneOrder.houseInfo.waitingTime = (((oneOrder.houseInfo.qGarlic + oneOrder.houseInfo.qPizzaRolls + oneOrder.houseInfo.qCheese) * 1.10) + ((oneOrder.houseInfo.qPizza + oneOrder.houseInfo.qPasta + oneOrder.houseInfo.qLasagna) * 1.5) + ((oneOrder.houseInfo.qBeer + oneOrder.houseInfo.qSoda + oneOrder.houseInfo.qTea) * 1.35));
+    cout << "Tiempo de espera en minutos: " << oneOrder.houseInfo.waitingTime << endl;
+    hOrder.push_back(oneOrder);
+    //Restaurante: (cantidad de entradas * 1.10 + cantidad de platos principales * 1.5 + cantidad de bebidas * 1.35)
 
 }
 
-void seeOrders(vector <delivery> delOrder){
+void seeOrders(vector <delivery> &delOrder){
     for(int i = 0; i < delOrder.size(); i++){
         cout << endl << "Nombre:\t" << delOrder[i].deliveryInfo.name << endl;
         cout << "Telefono: " << delOrder[i].cellphone << endl;
@@ -361,16 +401,17 @@ void seeOrders(vector <delivery> delOrder){
         cout << "Soda. Cantidad: " << delOrder[i].deliveryInfo.qSoda << endl;
         cout << "Te helado. Cantidad: " << delOrder[i].deliveryInfo.qTea << endl;
 
-        cout << delOrder[i].deliveryInfo.idOrder << endl;
+        cout << "Numero de orden: " << delOrder[i].deliveryInfo.idOrder << endl;
 
         cout << "Tipo de pago: " << delOrder[i].deliveryInfo.pay << endl;
 
         cout << "Monto: " << delOrder[i].deliveryInfo.total << endl;
+        cout << "Tiempo de espera en minutos: " << delOrder[i].deliveryInfo.waitingTime << endl;
     }
 
 }
 
-void seeOrders(vector <houseOrder> hOrder){
+void seeOrders(vector <houseOrder> &hOrder){
     for(int i = 0; i < hOrder.size(); i++){
         cout << endl << "Nombre:\t" << hOrder[i].houseInfo.name << endl;
         
@@ -389,14 +430,63 @@ void seeOrders(vector <houseOrder> hOrder){
         cout << "Soda. Cantidad: " << hOrder[i].houseInfo.qSoda << endl;
         cout << "Te helado. Cantidad: " << hOrder[i].houseInfo.qTea << endl;
 
-        cout << hOrder[i].houseInfo.idOrder << endl;
+        cout << "Numero de orden: " << hOrder[i].houseInfo.idOrder << endl;
 
         cout << "Tipo de pago: " << hOrder[i].houseInfo.pay << endl;
 
         cout << "Monto: " << hOrder[i].houseInfo.total << endl;
+        cout << "Tiempo de espera en minutos: " << hOrder[i].houseInfo.waitingTime << endl;
     }
 }
 
+void done(vector <delivery> &delOrder, vector <delivery> &delDone, int id){
+    cout << endl << "Despachando orden a domicilio.." << endl;
+    // for o while !empty
+    int i = 0;
+    for(auto iter = delOrder.begin(); iter != delOrder.end(); iter++){
+        if(iter->deliveryInfo.idOrder == id){
+            delDone.push_back(delOrder.at(i));
+            iter = delOrder.erase(iter);
+        }
+        i++;
+    }
+
+    cout << "Orden " << id << " a domicilio despachada" << endl;
+
+
+}
+
+void done(vector <houseOrder> &hOrder, vector <houseOrder> &hDone, int id){
+    cout << endl << "Despachando orden en restaurante.." << endl;
+    // for o while !empty
+    int i = 0;
+    for(auto iter = hOrder.begin(); iter != hOrder.end(); ++iter){
+        if(iter->houseInfo.idOrder == id){
+            hDone.push_back(hOrder.at(i));
+            iter = hOrder.erase(iter);
+        }
+        i++;
+    }
+
+    cout << "Orden " << id << " en restaurante despachada" << endl;
+
+}
+
+void waitTime(vector <delivery> &delOrder){
+    float waitingTimeTotal = 0;
+    for(int i = 0; i < delOrder.size(); i++){
+        waitingTimeTotal = delOrder[i].deliveryInfo.waitingTime++;
+    }
+    cout << waitingTimeTotal << " minutos" << endl;
+}
+
+void waitTime(vector <houseOrder> &hOrder){
+    float waitingTimeTotal = 0;
+    for(int i = 0; i < hOrder.size(); i++){
+        waitingTimeTotal = hOrder[i].houseInfo.waitingTime++;
+    }
+    cout << waitingTimeTotal << " minutos" << endl;
+}
 /*void searchByName(delivery *array, int size)
 {
     bool userExists = false;
