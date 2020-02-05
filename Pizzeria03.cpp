@@ -53,7 +53,6 @@ struct houseOrder
 };
 
 //variables globales
-
 bool isAdmin = false;
 int idOrder = 1;
 
@@ -72,26 +71,22 @@ void waitTime(vector <houseOrder> &hOrder);
 void cancelOrder(vector <delivery> &delOrder, int id);
 void cancelOrder(vector <houseOrder> &hOrder, int id);
 
-
-
 //if(!s)  if(s == NULL)
 //if(s)   if(s != NULL)
 
 int main(void)
 {
     // Declaracion de variables y arreglos a usar
-    delivery *dArray = NULL;
-    houseOrder *hArray = NULL;
     vector <delivery> delOrder;
     vector <houseOrder> hOrder;
     vector <delivery> delDone;
     vector <houseOrder> hDone;
     int idAuxD = 0, idAuxH = 0, cancelidD = 0, cancelidH = 0, orderType = 0;
-    
     int option = 0;
     // if(loginUser())       if(loginUser() == true)
 
     // Verificacion para iniciar sesion
+    cout << "INICIO DE SESION" << endl;
     if (!loginUser()) //if(loginUser() == false)
         return 0;
 
@@ -134,30 +129,42 @@ int main(void)
             break;
         case 5:
             // Despachar ordenes a domicilio solo mostrar, total de ventas
-            cout << "¿Que numero de orden a domicilio desea despachar?" << endl;
-            cin >> idAuxD; cin.ignore();
-            done(delOrder, delDone, idAuxD);
+            if(delOrder.empty()){
+                cout << endl << "No hay ordenes en espera" << endl;
+            }
+            else{
+                cout << "¿Que numero de orden a domicilio desea despachar?" << endl;
+                cin >> idAuxD; cin.ignore();
+                done(delOrder, delDone, idAuxD); 
+            }
+            
             break;
         case 6:
             // Despachar ordenes en restaurante, total de ventas
-            cout << "¿Que numero de orden en restaurante desea despachar? " << endl;
-            cin >> idAuxH; cin.ignore();
-            done(delOrder, delDone, idAuxH);
+            if(delOrder.empty()){
+                cout << endl << "No hay ordenes en espera" << endl;
+            }
+            else{
+                cout << "¿Que numero de orden en restaurante desea despachar? " << endl;
+                cin >> idAuxH; cin.ignore();
+                done(delOrder, delDone, idAuxH);
+            }
+            
             break;
         case 7:
             // Tiempo promedio de espera a domicilio de las que no han sido despachadas
-            cout << "Tiempo de espera de ordenes a domicilio no despachadas: ";
+            cout << endl << "Tiempo de espera de ordenes a domicilio no despachadas: ";
             waitTime(delOrder);
             break;
         case 8:
-            cout << "Tiempo de espera de ordenes en restaurante no despachadas: ";
+            cout << endl << "Tiempo de espera de ordenes en restaurante no despachadas: ";
             waitTime(hOrder);
             break;
         case 9:
             // Cancelar orden a domicilio o restaurante, solo admin
             if(isAdmin == true){
 
-                cout << "¿Que tipo de orden desea cancelar? \n 1. A domicilio\n2.Restaurante" << endl;
+                cout << "¿Que tipo de orden desea cancelar? \n 1. A domicilio\n 2.Restaurante" << endl;
                 cin >> orderType; cin.ignore();
                 while(orderType != 1 && orderType != 2){
                     cout << "Opcion invalida, escriba 1 para a domicilio y 2 para restaurante: "; cin >> orderType; cin.ignore();
@@ -194,6 +201,10 @@ int main(void)
             break;
         case 11:
             // Cambiar de usuario
+            cout << endl << "CAMBIAR DE USUARIO" << endl;
+            if (!loginUser()) 
+                return 0;
+
             break;
         case 12:
             cout << "Salida exitosa, gracias por preferirnos!" << endl;
@@ -212,7 +223,6 @@ bool loginUser(void)
 {
     string enterPass = "";
     char option;
-    cout << "INICIO DE SESION" << endl;
     cout << "A - Administrador" << endl;
     cout << "E - Empleado" << endl;
     cout << "Su opcion:\t";
@@ -232,7 +242,15 @@ bool loginUser(void)
         }
         else
         {
-            cout << "Contraseña incorrecta" << endl;
+            while(enterPass.compare(PASSWORD) != 0){
+                cout << "Contraseña incorrecta" << endl;
+                cout << "Ingrese su contraseña: "; cin >> enterPass;
+                if (enterPass.compare(PASSWORD) == 0)
+                {
+                    isAdmin = true;
+                    return true;
+                }
+            }
         }
 
         break;
