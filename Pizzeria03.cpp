@@ -14,7 +14,6 @@ using namespace std;
 enum paymentType {cash, card};
 
 // Declaraciones de estructuras
-
 // Sub estructura para almacenar datos de direccion
 struct address
 {
@@ -248,7 +247,7 @@ int main(void)
             default:
 
             cout << "Opcion invalida" << endl;
-            
+
             break;
         }
 
@@ -257,8 +256,9 @@ int main(void)
     return 0;
 }
 
-bool loginUser(void)
-{
+// Funcion para iniciar sesion o cambiar de usuario
+bool loginUser(void){
+
     string enterPass = "";
     char option;
     cout << "A - Administrador" << endl;
@@ -266,41 +266,42 @@ bool loginUser(void)
     cout << "Su opcion:\t";
     cin >> option;
 
-    switch (option)
-    {
-    case 'a':
-    case 'A':
-        cout << "Digite contraseña: ";
-        cin >> enterPass;
+    switch (option){
 
-        if (enterPass.compare(PASSWORD) == 0)
-        {
-            isAdmin = true;
-            return true;
-        }
-        else
-        {
-            while(enterPass.compare(PASSWORD) != 0){
-                cout << "Contraseña incorrecta" << endl;
-                cout << "Ingrese su contraseña: "; cin >> enterPass;
-                if (enterPass.compare(PASSWORD) == 0)
-                {
-                    isAdmin = true;
-                    return true;
+        case 'a':
+        case 'A':
+            cout << "Digite contraseña: ";
+            cin >> enterPass;
+
+            if (enterPass.compare(PASSWORD) == 0)
+            {
+                isAdmin = true;
+                return true;
+            }
+            else
+            {
+                while(enterPass.compare(PASSWORD) != 0){
+                    cout << "Contraseña incorrecta" << endl;
+                    cout << "Ingrese su contraseña: "; cin >> enterPass;
+                    if (enterPass.compare(PASSWORD) == 0)
+                    {
+                        isAdmin = true;
+                        return true;
+                    }
                 }
             }
-        }
+        break;
 
-        break;
-    case 'e':
-    case 'E':
-        isAdmin = false;
-        return true;
-        break;
-    }
+        case 'e':
+        case 'E':
+            isAdmin = false;
+            return true;
+            break;
+        }
     return false;
 }
 
+// Funcion del menu principal
 void printMenu(void)
 {
     cout << endl << "BIENVENIDO AL SISTEMA DE DESPACHO DE LA PIZZERIA LA ITALIANA" << endl;
@@ -319,6 +320,7 @@ void printMenu(void)
     cout << "Su opcion:\t";
 }
 
+// Funcion para agregar ordenes a domicilio
 void addOrder(vector <delivery> &delOrder)
 {
     delivery oneOrder;
@@ -396,14 +398,14 @@ void addOrder(vector <delivery> &delOrder)
     delOrder.push_back(oneOrder);
 
     //Domicilio: (cantidad de entradas * 1.10 + cantidad de platos principales * 1.5 + cantidad de bebidas * 1.35) + 15
-
-
-    
+  
 }
 
-void addOrder(vector <houseOrder> &hOrder)
-{
+// Funcion para agregar ordenes en restaurante
+void addOrder(vector <houseOrder> &hOrder){
+
     houseOrder oneOrder;
+
     int aux = 0;
     cout << endl << "Nombre:\t";
     getline(cin, oneOrder.houseInfo.name);
@@ -470,6 +472,7 @@ void addOrder(vector <houseOrder> &hOrder)
 
 }
 
+// Funcion para mostrar las ordenes en espera a domicilio
 void seeOrders(int pos, vector <delivery> &delOrder){
     if(pos == delOrder.size())
         return;
@@ -509,7 +512,9 @@ void seeOrders(int pos, vector <delivery> &delOrder){
 
 }
 
+// Funcion para mostrar ordenes en espera de restaurante
 void seeOrders(int pos, vector <houseOrder> &hOrder){
+
     if(pos == hOrder.size())
         return;
     else{
@@ -541,7 +546,9 @@ void seeOrders(int pos, vector <houseOrder> &hOrder){
     }
 }
 
+// Funcion para despachar ordenes a domicilio
 void done(vector <delivery> &delOrder, vector <delivery> &delDone, int id){
+
     cout << endl << "Despachando orden a domicilio.." << endl;
     // for o while !empty
     int i = 0;
@@ -554,11 +561,11 @@ void done(vector <delivery> &delOrder, vector <delivery> &delDone, int id){
     }
 
     cout << "Orden " << id << " a domicilio despachada" << endl;
-
-
 }
 
+// Funcion para despachar ordenes en restaurante
 void done(vector <houseOrder> &hOrder, vector <houseOrder> &hDone, int id){
+
     cout << endl << "Despachando orden en restaurante.." << endl;
     // for o while !empty
     int i = 0;
@@ -574,22 +581,29 @@ void done(vector <houseOrder> &hOrder, vector <houseOrder> &hDone, int id){
 
 }
 
+// Funcion para calcular el tiempo de espera para las ordenes pendientes a domicilio
 void waitTime(vector <delivery> &delOrder){
+
     float waitingTimeTotal = 0;
+
     for(int i = 0; i < delOrder.size(); i++){
         waitingTimeTotal += delOrder[i].deliveryInfo.waitingTime;
     }
     cout << ceil(waitingTimeTotal) << " minutos" << endl;
 }
 
+// Funcion para calcular el tiempo de espera para las ordenes pendientes de restaurante
 void waitTime(vector <houseOrder> &hOrder){
+
     float waitingTimeTotal = 0;
+
     for(int i = 0; i < hOrder.size(); i++){
         waitingTimeTotal += hOrder[i].houseInfo.waitingTime;
     }
     cout << ceil(waitingTimeTotal) << " minutos" << endl;
 }
 
+// Funcion para cancelar ordenes a domicilio segun numero de orden
 void cancelOrder(vector <delivery> &delOrder, int id){
 
     int i = 0;
@@ -601,6 +615,7 @@ void cancelOrder(vector <delivery> &delOrder, int id){
     }
 }
 
+// Funcion para cancelar ordenes en restaurante segun numero de orden
 void cancelOrder(vector <houseOrder> &hOrder, int id){
 
     int i = 0;
@@ -611,6 +626,8 @@ void cancelOrder(vector <houseOrder> &hOrder, int id){
         i++;       
     }
 }
+
+// Funcion para ver el total de ventas de las ordenes despachadas más IVA
 void total(vector <delivery> &delDone, vector <houseOrder> &hDone){
     
     float totalDel = 0, totalH = 0;
