@@ -87,7 +87,7 @@ int main(void)
     int option = 0;
 
     // Verificacion para iniciar sesion
-    cout << "INICIO DE SESION" << endl;
+    cout << "\tINICIO DE SESION" << endl << endl;
     if (!loginUser()) 
         return 0;
 
@@ -145,7 +145,7 @@ int main(void)
                     cout << endl << "No hay ordenes en espera" << endl;
                 }
                 else{
-                    cout << "¿Que numero de orden a domicilio desea despachar?" << endl;
+                    cout << "¿Que numero de orden a domicilio desea despachar? : ";
                     cin >> idAuxD; cin.ignore();
                     done(delOrder, delDone, idAuxD); 
                 }
@@ -155,13 +155,13 @@ int main(void)
             case 6:
 
                 // Despachar ordenes en restaurante segun numero de orden
-                if(delOrder.empty()){
+                if(hOrder.empty()){
                     cout << endl << "No hay ordenes en espera" << endl;
                 }
                 else{
-                    cout << "¿Que numero de orden en restaurante desea despachar? " << endl;
+                    cout << "¿Que numero de orden en restaurante desea despachar? : ";
                     cin >> idAuxH; cin.ignore();
-                    done(delOrder, delDone, idAuxH);
+                    done(hOrder, hDone, idAuxH);
                 }
             
             break;
@@ -216,7 +216,7 @@ int main(void)
                 }
 
                 else{
-                    cout << endl << "No tiene suficientes permisos!" << endl;
+                    cout << endl << "\t¡No tiene suficientes permisos!" << endl;
                 }
             
             break;
@@ -231,7 +231,7 @@ int main(void)
             case 11:
 
                 // Cambiar de usuario
-                cout << endl << "CAMBIAR DE USUARIO" << endl;
+                cout << endl << "\tCAMBIAR DE USUARIO " << endl << endl;
                 if (!loginUser()) 
                     return 0;
 
@@ -240,13 +240,13 @@ int main(void)
             case 12:
 
                 // Mensaje de salida
-                cout << "Salida exitosa, gracias por preferirnos!" << endl;
+                cout << endl << "\t¡SALIDA EXITOSA, GRACIAS POR PREFERIRNOS!" << endl << endl;
 
             break;
 
             default:
 
-            cout << "Opcion invalida" << endl;
+            cout << endl << "\t¡Opcion invalida!" << endl;
 
             break;
         }
@@ -270,7 +270,7 @@ bool loginUser(void){
 
         case 'a':
         case 'A':
-            cout << "Digite contraseña: ";
+            cout << endl << "Digite contraseña: \t";
             cin >> enterPass;
 
             if (enterPass.compare(PASSWORD) == 0)
@@ -281,8 +281,8 @@ bool loginUser(void){
             else
             {
                 while(enterPass.compare(PASSWORD) != 0){
-                    cout << "Contraseña incorrecta" << endl;
-                    cout << "Ingrese su contraseña: "; cin >> enterPass;
+                    cout << endl << "ERROR - ¡Contraseña incorrecta!" << endl;
+                    cout << endl << "Ingrese su contraseña nuevamente: \t"; cin >> enterPass;
                     if (enterPass.compare(PASSWORD) == 0)
                     {
                         isAdmin = true;
@@ -529,18 +529,18 @@ void seeOrders(int pos, vector <houseOrder> &hOrder){
         cout << endl << "\tORDEN " << hOrder[pos].houseInfo.idOrder << ": " << endl;
         cout << endl << "Nombre:\t" << hOrder[pos].houseInfo.name << endl;
         
-        cout << "--- ENTRADAS ---" << endl;
-        cout << "Pan con ajo. Cantidad: " << hOrder[pos].houseInfo.qGarlic << endl;
+        cout << endl << "--- ENTRADAS ---" << endl;
+        cout << endl << "Pan con ajo. Cantidad: " << hOrder[pos].houseInfo.qGarlic << endl;
         cout << "Pizza rolls. Cantidad: " << hOrder[pos].houseInfo.qPizzaRolls << endl;
         cout << "Palitos de queso. Cantidad: " << hOrder[pos].houseInfo.qCheese << endl;
 
-        cout << "--- PLATOS PRINCIPALES ---" << endl;
-        cout << "Pizza. Cantidad: " << hOrder[pos].houseInfo.qPizza << endl;
+        cout << endl << "--- PLATOS PRINCIPALES ---" << endl;
+        cout << endl << "Pizza. Cantidad: " << hOrder[pos].houseInfo.qPizza << endl;
         cout << "Pasta. Cantidad: " << hOrder[pos].houseInfo.qPasta << endl;
         cout << "Lasagna. Cantidad: " << hOrder[pos].houseInfo.qLasagna << endl;
 
-        cout << "--- BEBIDAS ---" << endl;
-        cout << "Cerveza. Cantidad: " << hOrder[pos].houseInfo.qBeer << endl;
+        cout << endl << "--- BEBIDAS ---" << endl;
+        cout << endl << "Cerveza. Cantidad: " << hOrder[pos].houseInfo.qBeer << endl;
         cout << "Soda. Cantidad: " << hOrder[pos].houseInfo.qSoda << endl;
         cout << "Te helado. Cantidad: " << hOrder[pos].houseInfo.qTea << endl;
 
@@ -560,15 +560,21 @@ void done(vector <delivery> &delOrder, vector <delivery> &delDone, int id){
     cout << endl << "Despachando orden a domicilio.." << endl;
     // for o while !empty
     int i = 0;
+    int flag = 0;
     for(auto iter = delOrder.begin(); iter <= delOrder.end(); iter++){
         if(iter->deliveryInfo.idOrder == id){
             delDone.push_back(delOrder.at(i));
             iter = delOrder.erase(iter);
+            flag = 1;
         }
         i++;
     }
-
-    cout << "Orden " << id << " a domicilio despachada" << endl;
+    if(flag == 1){
+        cout << endl << "¡Orden " << id << " a domicilio despachada!" << endl;
+    }
+    else{
+        cout << endl << "\t¡La orden ingresada no existe o ya ha sido despachada!" << endl;
+    }    
 }
 
 // Funcion para despachar ordenes en restaurante
@@ -577,16 +583,21 @@ void done(vector <houseOrder> &hOrder, vector <houseOrder> &hDone, int id){
     cout << endl << "Despachando orden en restaurante.." << endl;
     // for o while !empty
     int i = 0;
+    int flag = 0;
     for(auto iter = hOrder.begin(); iter <= hOrder.end(); ++iter){
         if(iter->houseInfo.idOrder == id){
             hDone.push_back(hOrder.at(i));
             iter = hOrder.erase(iter);
+            flag = 1;
         }
         i++;
     }
-
-    cout << "Orden " << id << " en restaurante despachada" << endl;
-
+    if(flag == 1){
+        cout << endl << "¡Orden " << id << " en restaurante despachada!" << endl;
+    }
+    else{
+        cout << endl << "\t¡La orden ingresada no existe o ya ha sido despachada!" << endl;
+    } 
 }
 
 // Funcion para calcular el tiempo de espera para las ordenes pendientes a domicilio
@@ -614,20 +625,36 @@ void waitTime(vector <houseOrder> &hOrder){
 // Funcion para cancelar ordenes a domicilio segun numero de orden
 void cancelOrder(vector <delivery> &delOrder, int id){
 
+    int flag = 0;
     for(auto iter = delOrder.begin(); iter <= delOrder.end(); iter++){
         if(iter->deliveryInfo.idOrder == id){
             iter = delOrder.erase(iter);
+            flag = 1;
         }       
+    }
+    if(flag == 1){
+        cout << endl << "¡La orden " << id << " ha sido eliminada!" << endl;
+    }
+    else{
+        cout << endl << "\t¡La orden ingresada no existe o ya ha sido despachada!" << endl;
     }
 }
 
 // Funcion para cancelar ordenes en restaurante segun numero de orden
 void cancelOrder(vector <houseOrder> &hOrder, int id){
 
+    int flag = 0;
     for(auto iter = hOrder.begin(); iter <= hOrder.end(); iter++){
         if(iter->houseInfo.idOrder == id){
             iter = hOrder.erase(iter);
+            flag = 1;
         }      
+    }
+    if(flag == 1){
+        cout << endl << "¡La orden " << id << " ha sido eliminada!" << endl;
+    }
+    else{
+        cout << endl << "\t¡La orden ingresada no existe o ya ha sido despachada!" << endl;
     }
 }
 
