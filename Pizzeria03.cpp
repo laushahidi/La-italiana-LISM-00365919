@@ -56,11 +56,11 @@ struct houseOrder
     mainInfo houseInfo;
 };
 
-//variables globales
+// Variables globales
 bool isAdmin = false;
 int idOrder = 1;
 
-//Declaraciones de prototipos
+// Declaraciones de prototipos
 bool loginUser(void);
 void printMenu(void);
 void addOrder(vector <delivery> &delOrder);
@@ -187,7 +187,7 @@ int main(void)
                 // Cancelar orden a domicilio o restaurante, solo admin
                 if(isAdmin == true){
 
-                    cout << "¿Que tipo de orden desea cancelar? \n 1. A domicilio\n 2.Restaurante\n Su opcion: " << endl;
+                    cout << "¿Que tipo de orden desea cancelar? \n 1. A domicilio\n 2. Restaurante\n Su opcion: " << endl;
                     cin >> orderType; cin.ignore();
                     while(orderType != 1 && orderType != 2){
                         cout << "Opcion invalida, escriba 1 para a domicilio y 2 para restaurante: "; cin >> orderType; cin.ignore();
@@ -304,7 +304,7 @@ bool loginUser(void){
 // Funcion del menu principal
 void printMenu(void)
 {
-    cout << endl << "BIENVENIDO AL SISTEMA DE DESPACHO DE LA PIZZERIA LA ITALIANA" << endl;
+    cout << endl << "BIENVENIDO AL SISTEMA DE DESPACHO DE LA PIZZERIA LA ITALIANA" << endl << endl;
     cout << "1. Agregar ordenes a domicilio" << endl;
     cout << "2. Agregar ordenes en restaurante" << endl;
     cout << "3. Ver ordenes a domicilio" << endl;
@@ -331,7 +331,7 @@ void addOrder(vector <delivery> &delOrder)
     cout << "Telefono: ";
     cin >> oneOrder.cellphone;
     cin.ignore();
-    cout << "Direccion" << endl;
+    cout << endl << "--- DIRECCION ---" << endl << endl;
     cout << "Colonia:\t";
     getline(cin, oneOrder.deliveryAddress.settlement);
     cout << "Municipio:\t";
@@ -342,8 +342,8 @@ void addOrder(vector <delivery> &delOrder)
     cin >> oneOrder.deliveryAddress.houseNumber;
     cin.ignore();
 
-    cout << "Entrada" << endl;
-    cout << "Pan con ajo. Cantidad: ";
+    cout << endl << "--- ENTRADAS ---" << endl;
+    cout << endl << "Pan con ajo. Cantidad: ";
     cin >> oneOrder.deliveryInfo.qGarlic;
     cin.ignore();
     cout << "Pizza rolls. Cantidad: ";
@@ -353,8 +353,8 @@ void addOrder(vector <delivery> &delOrder)
     cin >> oneOrder.deliveryInfo.qCheese;
     cin.ignore();
 
-    cout << "Plato principal" << endl;
-    cout << "Pizza. Cantidad: ";
+    cout << endl << "--- PLATOS PRINCIPALES ---" << endl;
+    cout << endl << "Pizza. Cantidad: ";
     cin >> oneOrder.deliveryInfo.qPizza;
     cin.ignore();
     cout << "Pasta. Cantidad: ";
@@ -364,8 +364,8 @@ void addOrder(vector <delivery> &delOrder)
     cin >> oneOrder.deliveryInfo.qLasagna;
     cin.ignore();
 
-    cout << "Bebida" << endl;
-    cout << "Cerveza. Cantidad: ";
+    cout << endl << "--- BEBIDAS ---" << endl;
+    cout << endl << "Cerveza. Cantidad: ";
     cin >> oneOrder.deliveryInfo.qBeer;
     cin.ignore();
     cout << "Soda. Cantidad: ";
@@ -377,12 +377,16 @@ void addOrder(vector <delivery> &delOrder)
 
     oneOrder.deliveryInfo.idOrder = idOrder++;
 
-    cout << "Tipo de pago" << endl;
-    cout << "1 - Tarjeta" << endl;
+    cout << endl << "--- TIPO DE PAGO ---" << endl;
+    cout << endl << "1 - Tarjeta" << endl;
     cout << "2 - Efectivo" << endl;
     cout << "Su opcion:\t";
-    cin >> aux;
-    cin.ignore();
+    cin >> aux; cin.ignore();
+
+    while(aux != 1 && aux != 2){
+        cout << endl << "Opcion invalida, por favor ingresar \n (1) Para tarjeta  \n (2) Para efectivo \n Su opcion: ";
+        cin >> aux; cin.ignore();
+    }
 
     if (aux == 1)
         oneOrder.deliveryInfo.pay = card;
@@ -390,9 +394,9 @@ void addOrder(vector <delivery> &delOrder)
         oneOrder.deliveryInfo.pay = cash;
 
     oneOrder.deliveryInfo.total = ((oneOrder.deliveryInfo.qGarlic * 3.99) + (oneOrder.deliveryInfo.qPizzaRolls * 4.99) + (oneOrder.deliveryInfo.qCheese * 3.75) + (oneOrder.deliveryInfo.qPizza * 13.99) + (oneOrder.deliveryInfo.qPasta * 5.55) + (oneOrder.deliveryInfo.qLasagna * 6.25) + (oneOrder.deliveryInfo.qBeer * 1.99) + (oneOrder.deliveryInfo.qSoda * 0.95) + (oneOrder.deliveryInfo.qTea *1.15));
-    cout << "Monto: $" << oneOrder.deliveryInfo.total << endl;
+    cout << endl << "Monto: $" << oneOrder.deliveryInfo.total << endl;
     cout << "Total con IVA: $" << (oneOrder.deliveryInfo.total * 1.13) << endl;
-    cout << "Numero de orden: " << oneOrder.deliveryInfo.idOrder << endl;
+    cout << endl << "Numero de orden: " << oneOrder.deliveryInfo.idOrder << endl;
     oneOrder.deliveryInfo.waitingTime = (((oneOrder.deliveryInfo.qGarlic + oneOrder.deliveryInfo.qPizzaRolls + oneOrder.deliveryInfo.qCheese) * 1.10) + ((oneOrder.deliveryInfo.qPizza + oneOrder.deliveryInfo.qPasta + oneOrder.deliveryInfo.qLasagna) * 1.5) + ((oneOrder.deliveryInfo.qBeer + oneOrder.deliveryInfo.qSoda + oneOrder.deliveryInfo.qTea) * 1.35) + 15);
     cout << "Tiempo de espera en minutos: " << ceil(oneOrder.deliveryInfo.waitingTime) << endl;
     delOrder.push_back(oneOrder);
@@ -413,19 +417,19 @@ void addOrder(vector <houseOrder> &hOrder){
     cin, oneOrder.pTable;
     cin.ignore();
 
-    cout << "Entrada" << endl;
-    cout << "Pan con ajo. Cantidad: ";
+    cout << endl << "--- ENTRADAS ---" << endl;
+    cout << endl << "Pan con ajo. Cantidad: ";
     cin >> oneOrder.houseInfo.qGarlic;
     cin.ignore();
     cout << "Pizza rolls. Cantidad: ";
     cin >> oneOrder.houseInfo.qPizzaRolls;
     cin.ignore();
-    cout << "Palitos de queso. Cantidad: " << endl;
+    cout << "Palitos de queso. Cantidad: ";
     cin >> oneOrder.houseInfo.qCheese;
     cin.ignore();
 
-    cout << "Plato principal" << endl;
-    cout << "Pizza. Cantidad: ";
+    cout << endl << "--- PLATOS PRINCIPALES ---" << endl;
+    cout << endl << "Pizza. Cantidad: ";
     cin >> oneOrder.houseInfo.qPizza;
     cin.ignore();
     cout << "Pasta. Cantidad: ";
@@ -435,8 +439,8 @@ void addOrder(vector <houseOrder> &hOrder){
     cin >> oneOrder.houseInfo.qLasagna;
     cin.ignore();
 
-    cout << "Bebida" << endl;
-    cout << "Cerveza. Cantidad: ";
+    cout << endl << "--- BEBIDAS ---" << endl;
+    cout << endl << "Cerveza. Cantidad: ";
     cin >> oneOrder.houseInfo.qBeer;
     cin.ignore();
     cout << "Soda. Cantidad: ";
@@ -448,12 +452,16 @@ void addOrder(vector <houseOrder> &hOrder){
 
     oneOrder.houseInfo.idOrder = idOrder++;
 
-    cout << "Tipo de pago" << endl;
-    cout << "1 - Tarjeta" << endl;
+    cout << endl << "--- TIPO DE PAGO ---" << endl;
+    cout << endl << "1 - Tarjeta" << endl;
     cout << "2 - Efectivo" << endl;
     cout << "Su opcion:\t";
-    cin >> aux;
-    cin.ignore();
+    cin >> aux; cin.ignore();
+
+    while(aux != 1 && aux != 2){
+        cout << endl << "Opcion invalida, por favor ingresar \n (1) Para tarjeta  \n (2) Para efectivo \n Su opcion: ";
+        cin >> aux; cin.ignore();
+    }
 
     if (aux == 1)
         oneOrder.houseInfo.pay = card;
@@ -461,9 +469,9 @@ void addOrder(vector <houseOrder> &hOrder){
         oneOrder.houseInfo.pay = cash;
 
     oneOrder.houseInfo.total = ((oneOrder.houseInfo.qGarlic * 3.99) + (oneOrder.houseInfo.qPizzaRolls * 4.99) + (oneOrder.houseInfo.qCheese * 3.75) + (oneOrder.houseInfo.qPizza * 13.99) + (oneOrder.houseInfo.qPasta * 5.55) + (oneOrder.houseInfo.qLasagna * 6.25) + (oneOrder.houseInfo.qBeer * 1.99) + (oneOrder.houseInfo.qSoda * 0.95) + (oneOrder.houseInfo.qTea *1.15));
-    cout << "Monto: $" << oneOrder.houseInfo.total << endl;
+    cout << endl << "Monto: $" << oneOrder.houseInfo.total << endl;
     cout << "Total con IVA: $" << (oneOrder.houseInfo.total * 1.13) << endl;
-    cout << "Numero de orden: " << oneOrder.houseInfo.idOrder << endl;
+    cout << endl << "Numero de orden: " << oneOrder.houseInfo.idOrder << endl;
 
     oneOrder.houseInfo.waitingTime = (((oneOrder.houseInfo.qGarlic + oneOrder.houseInfo.qPizzaRolls + oneOrder.houseInfo.qCheese) * 1.10) + ((oneOrder.houseInfo.qPizza + oneOrder.houseInfo.qPasta + oneOrder.houseInfo.qLasagna) * 1.5) + ((oneOrder.houseInfo.qBeer + oneOrder.houseInfo.qSoda + oneOrder.houseInfo.qTea) * 1.35));
     cout << "Tiempo de espera en minutos: " << ceil(oneOrder.houseInfo.waitingTime) << endl;
@@ -477,35 +485,35 @@ void seeOrders(int pos, vector <delivery> &delOrder){
     if(pos == delOrder.size())
         return;
     else{
-
+        cout << endl << "\tORDEN " << delOrder[pos].deliveryInfo.idOrder << ": " << endl;
         cout << endl << "Nombre:\t" << delOrder[pos].deliveryInfo.name << endl;
         cout << "Telefono: " << delOrder[pos].cellphone << endl;
-        cout << "Direccion" << endl;
-        cout << "Colonia:\t" << delOrder[pos].deliveryAddress.settlement << endl;
+        cout << endl << "--- DIRECCION ---" << endl;
+        cout << endl << "Colonia:\t" << delOrder[pos].deliveryAddress.settlement << endl;
         cout << "Municipio:\t" << delOrder[pos].deliveryAddress.municipality << endl;
         cout << "Departamento:\t" << delOrder[pos].deliveryAddress.department << endl;
         cout << "No. casa:\t" << delOrder[pos].deliveryAddress.houseNumber << endl;
 
-        cout << "Entrada" << endl;
-        cout << "Pan con ajo. Cantidad: " << delOrder[pos].deliveryInfo.qGarlic << endl;
+        cout << endl << "--- ENTRADAS ---" << endl;
+        cout << endl << "Pan con ajo. Cantidad: " << delOrder[pos].deliveryInfo.qGarlic << endl;
         cout << "Pizza rolls. Cantidad: " << delOrder[pos].deliveryInfo.qPizzaRolls << endl;
         cout << "Palitos de queso. Cantidad: " << delOrder[pos].deliveryInfo.qCheese << endl;
 
-        cout << "Plato principal" << endl;
-        cout << "Pizza. Cantidad: " << delOrder[pos].deliveryInfo.qPizza << endl;
+        cout << endl << "--- PLATOS PRINCIPALES ---" << endl;
+        cout << endl << "Pizza. Cantidad: " << delOrder[pos].deliveryInfo.qPizza << endl;
         cout << "Pasta. Cantidad: " << delOrder[pos].deliveryInfo.qPasta << endl;
         cout << "Lasagna. Cantidad: " << delOrder[pos].deliveryInfo.qLasagna << endl;
 
-        cout << "Bebida" << endl;
-        cout << "Cerveza. Cantidad: " << delOrder[pos].deliveryInfo.qBeer << endl;
+        cout << endl << "--- BEBIDAS ---" << endl;
+        cout << endl << "Cerveza. Cantidad: " << delOrder[pos].deliveryInfo.qBeer << endl;
         cout << "Soda. Cantidad: " << delOrder[pos].deliveryInfo.qSoda << endl;
         cout << "Te helado. Cantidad: " << delOrder[pos].deliveryInfo.qTea << endl;
 
-        cout << "Numero de orden: " << delOrder[pos].deliveryInfo.idOrder << endl;
+        cout << endl << "Numero de orden: " << delOrder[pos].deliveryInfo.idOrder << endl;
 
-        cout << "Tipo de pago: " << delOrder[pos].deliveryInfo.pay << endl;
+        cout << endl << "Tipo de pago: " << delOrder[pos].deliveryInfo.pay << endl;
 
-        cout << "Monto: " << delOrder[pos].deliveryInfo.total << endl;
+        cout << endl << "Monto: " << delOrder[pos].deliveryInfo.total << endl;
         cout << "Tiempo de espera en minutos: " << ceil(delOrder[pos].deliveryInfo.waitingTime) << endl;
         return seeOrders(pos + 1, delOrder);
     }
@@ -518,29 +526,29 @@ void seeOrders(int pos, vector <houseOrder> &hOrder){
     if(pos == hOrder.size())
         return;
     else{
-    
+        cout << endl << "\tORDEN " << hOrder[pos].houseInfo.idOrder << ": " << endl;
         cout << endl << "Nombre:\t" << hOrder[pos].houseInfo.name << endl;
         
-        cout << "Entrada" << endl;
+        cout << "--- ENTRADAS ---" << endl;
         cout << "Pan con ajo. Cantidad: " << hOrder[pos].houseInfo.qGarlic << endl;
         cout << "Pizza rolls. Cantidad: " << hOrder[pos].houseInfo.qPizzaRolls << endl;
         cout << "Palitos de queso. Cantidad: " << hOrder[pos].houseInfo.qCheese << endl;
 
-        cout << "Plato principal" << endl;
+        cout << "--- PLATOS PRINCIPALES ---" << endl;
         cout << "Pizza. Cantidad: " << hOrder[pos].houseInfo.qPizza << endl;
         cout << "Pasta. Cantidad: " << hOrder[pos].houseInfo.qPasta << endl;
         cout << "Lasagna. Cantidad: " << hOrder[pos].houseInfo.qLasagna << endl;
 
-        cout << "Bebida" << endl;
+        cout << "--- BEBIDAS ---" << endl;
         cout << "Cerveza. Cantidad: " << hOrder[pos].houseInfo.qBeer << endl;
         cout << "Soda. Cantidad: " << hOrder[pos].houseInfo.qSoda << endl;
         cout << "Te helado. Cantidad: " << hOrder[pos].houseInfo.qTea << endl;
 
-        cout << "Numero de orden: " << hOrder[pos].houseInfo.idOrder << endl;
+        cout << endl << "Numero de orden: " << hOrder[pos].houseInfo.idOrder << endl;
 
-        cout << "Tipo de pago: " << hOrder[pos].houseInfo.pay << endl;
+        cout << endl << "Tipo de pago: " << hOrder[pos].houseInfo.pay << endl;
 
-        cout << "Monto: " << hOrder[pos].houseInfo.total << endl;
+        cout << endl << "Monto: " << hOrder[pos].houseInfo.total << endl;
         cout << "Tiempo de espera en minutos: " << ceil(hOrder[pos].houseInfo.waitingTime) << endl;
         return seeOrders(pos + 1, hOrder);
     }
@@ -552,7 +560,7 @@ void done(vector <delivery> &delOrder, vector <delivery> &delDone, int id){
     cout << endl << "Despachando orden a domicilio.." << endl;
     // for o while !empty
     int i = 0;
-    for(auto iter = delOrder.begin(); iter != delOrder.end(); iter++){
+    for(auto iter = delOrder.begin(); iter <= delOrder.end(); iter++){
         if(iter->deliveryInfo.idOrder == id){
             delDone.push_back(delOrder.at(i));
             iter = delOrder.erase(iter);
@@ -569,7 +577,7 @@ void done(vector <houseOrder> &hOrder, vector <houseOrder> &hDone, int id){
     cout << endl << "Despachando orden en restaurante.." << endl;
     // for o while !empty
     int i = 0;
-    for(auto iter = hOrder.begin(); iter != hOrder.end(); ++iter){
+    for(auto iter = hOrder.begin(); iter <= hOrder.end(); ++iter){
         if(iter->houseInfo.idOrder == id){
             hDone.push_back(hOrder.at(i));
             iter = hOrder.erase(iter);
@@ -606,24 +614,20 @@ void waitTime(vector <houseOrder> &hOrder){
 // Funcion para cancelar ordenes a domicilio segun numero de orden
 void cancelOrder(vector <delivery> &delOrder, int id){
 
-    int i = 0;
-    for(auto iter = delOrder.begin(); iter != delOrder.end(); iter++){
+    for(auto iter = delOrder.begin(); iter <= delOrder.end(); iter++){
         if(iter->deliveryInfo.idOrder == id){
             iter = delOrder.erase(iter);
-        }
-        i++;       
+        }       
     }
 }
 
 // Funcion para cancelar ordenes en restaurante segun numero de orden
 void cancelOrder(vector <houseOrder> &hOrder, int id){
 
-    int i = 0;
-    for(auto iter = hOrder.begin(); iter != hOrder.end(); iter++){
+    for(auto iter = hOrder.begin(); iter <= hOrder.end(); iter++){
         if(iter->houseInfo.idOrder == id){
             iter = hOrder.erase(iter);
-        }
-        i++;       
+        }      
     }
 }
 
