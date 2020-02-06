@@ -10,17 +10,19 @@
 
 using namespace std;
 
-// Probando comentario
-
+// Utilizando enum para el tipo de pago
 enum paymentType {cash, card};
 
 // Declaraciones de estructuras
+
+// Sub estructura para almacenar datos de direccion
 struct address
 {
     string settlement, municipality, department;
     int houseNumber;
 };
 
+// Sub estructura para almacenar datos generales a domicilio y en restaurante
 struct mainInfo
 {
     string name;
@@ -40,6 +42,7 @@ struct mainInfo
 
 };
 
+// Estructura para pedidos a domicilio
 struct delivery
 {
     address deliveryAddress;
@@ -47,6 +50,7 @@ struct delivery
     mainInfo deliveryInfo;
 };
 
+// Estructura para pedidos en restaurante
 struct houseOrder
 {
     int pTable;
@@ -57,8 +61,7 @@ struct houseOrder
 bool isAdmin = false;
 int idOrder = 1;
 
-
-//prototipos
+//Declaraciones de prototipos
 bool loginUser(void);
 void printMenu(void);
 void addOrder(vector <delivery> &delOrder);
@@ -73,23 +76,20 @@ void cancelOrder(vector <delivery> &delOrder, int id);
 void cancelOrder(vector <houseOrder> &hOrder, int id);
 void total(vector <delivery> &delDone, vector <houseOrder> &hDone);
 
-//if(!s)  if(s == NULL)
-//if(s)   if(s != NULL)
-
+// Programa principal
 int main(void)
 {
-    // Declaracion de variables y arreglos a usar
+    // Declaracion de variables y vectores a utilizar
     vector <delivery> delOrder;
     vector <houseOrder> hOrder;
     vector <delivery> delDone;
     vector <houseOrder> hDone;
     int idAuxD = 0, idAuxH = 0, cancelidD = 0, cancelidH = 0, orderType = 0;
     int option = 0;
-    // if(loginUser())       if(loginUser() == true)
 
     // Verificacion para iniciar sesion
     cout << "INICIO DE SESION" << endl;
-    if (!loginUser()) //if(loginUser() == false)
+    if (!loginUser()) 
         return 0;
 
     // Logica principal para la ejecucion del programa (menu)
@@ -99,121 +99,156 @@ int main(void)
         cin >> option;
         cin.ignore();
 
-        switch (option)
-        {
-        // Agregar ordenes a domicilio
-        case 1:
-            addOrder(delOrder);
-            break;
-        // Agregar ordenes en restaurante
-        case 2:
-            addOrder(hOrder);
-            break;
-        case 3:
-            // ver ordenes a domicilio
-            if(delOrder.empty()){
-                cout << endl << "No se han agregado ordenes a domicilio nuevas" << endl;
-            }
-            else{
-                seeOrders(0, delOrder); 
-            }
-                       
-            break;
-        case 4:
-            // ver ordenes en restaurante
-            if(hOrder.empty()){
-                cout << endl << "No se han agregado ordenes en restaurante nuevas" << endl;
-            }
-            else{
-                seeOrders(0, hOrder);            
-            }
-            
-            break;
-        case 5:
-            // Despachar ordenes a domicilio solo mostrar, total de ventas
-            if(delOrder.empty()){
-                cout << endl << "No hay ordenes en espera" << endl;
-            }
-            else{
-                cout << "¿Que numero de orden a domicilio desea despachar?" << endl;
-                cin >> idAuxD; cin.ignore();
-                done(delOrder, delDone, idAuxD); 
-            }
-            
-            break;
-        case 6:
-            // Despachar ordenes en restaurante, total de ventas
-            if(delOrder.empty()){
-                cout << endl << "No hay ordenes en espera" << endl;
-            }
-            else{
-                cout << "¿Que numero de orden en restaurante desea despachar? " << endl;
-                cin >> idAuxH; cin.ignore();
-                done(delOrder, delDone, idAuxH);
-            }
-            
-            break;
-        case 7:
-            // Tiempo promedio de espera a domicilio de las que no han sido despachadas
-            cout << endl << "Tiempo de espera de ordenes a domicilio no despachadas: ";
-            waitTime(delOrder);
-            break;
-        case 8:
-            cout << endl << "Tiempo de espera de ordenes en restaurante no despachadas: ";
-            waitTime(hOrder);
-            break;
-        case 9:
-            // Cancelar orden a domicilio o restaurante, solo admin
-            if(isAdmin == true){
+        switch (option){
+        
+            case 1:
 
-                cout << "¿Que tipo de orden desea cancelar? \n 1. A domicilio\n 2.Restaurante\n Su opcion: " << endl;
-                cin >> orderType; cin.ignore();
-                while(orderType != 1 && orderType != 2){
-                    cout << "Opcion invalida, escriba 1 para a domicilio y 2 para restaurante: "; cin >> orderType; cin.ignore();
-                }
-                if(orderType == 1){
-                    if(delOrder.empty()){
-                        cout << endl << "No se han agregado ordenes a domicilio nuevas" << endl;
-                    }
-                    else{
-                        cout << "¿Que numero de orden desea cancelar? " << endl;
-                        cin >> cancelidD; cin.ignore();
-                        cancelOrder(delOrder, cancelidD);
-                    }
+                // Agregar ordenes a domicilio
+                addOrder(delOrder);
+
+            break;
+        
+            case 2:
+
+                // Agregar ordenes en restaurante
+                addOrder(hOrder);
+
+            break;
+
+            case 3:
+
+                // Ver ordenes a domicilio
+                if(delOrder.empty()){
+                    cout << endl << "No se han agregado ordenes a domicilio nuevas" << endl;
                 }
                 else{
-                    if(hOrder.empty()){
-                        cout << endl << "No se han agregado ordenes en restaurante nuevas" << endl;
-                    }
-                    else{
-                        cout << "¿Que numero de orden desea cancelar? " << endl;
-                        cin >> cancelidH; cin.ignore();
-                        cancelOrder(hOrder, cancelidH);           
-                    }
+                    seeOrders(0, delOrder); 
                 }
-                
-            }
-            else{
-                cout << endl << "No tiene suficientes permisos!" << endl;
-            }
+                       
+            break;
+
+            case 4:
+
+                // Ver ordenes en restaurante
+                if(hOrder.empty()){
+                    cout << endl << "No se han agregado ordenes en restaurante nuevas" << endl;
+                }
+                else{
+                    seeOrders(0, hOrder);            
+                }
             
             break;
-        case 10:
-            // Calcular total de ventas a domicilio + restaurante ordenes despachadas 2 vectores aux sumados de total
-            total(delDone, hDone);
+
+            case 5:
+
+                // Despachar ordenes a domicilio segun numero de orden
+                if(delOrder.empty()){
+                    cout << endl << "No hay ordenes en espera" << endl;
+                }
+                else{
+                    cout << "¿Que numero de orden a domicilio desea despachar?" << endl;
+                    cin >> idAuxD; cin.ignore();
+                    done(delOrder, delDone, idAuxD); 
+                }
+            
             break;
-        case 11:
-            // Cambiar de usuario
-            cout << endl << "CAMBIAR DE USUARIO" << endl;
-            if (!loginUser()) 
-                return 0;
+
+            case 6:
+
+                // Despachar ordenes en restaurante segun numero de orden
+                if(delOrder.empty()){
+                    cout << endl << "No hay ordenes en espera" << endl;
+                }
+                else{
+                    cout << "¿Que numero de orden en restaurante desea despachar? " << endl;
+                    cin >> idAuxH; cin.ignore();
+                    done(delOrder, delDone, idAuxH);
+                }
+            
+            break;
+
+            case 7:
+
+                // Tiempo promedio de espera a domicilio de las que no han sido despachadas
+                cout << endl << "Tiempo de espera de ordenes a domicilio no despachadas: ";
+                waitTime(delOrder);
 
             break;
-        case 12:
-            cout << "Salida exitosa, gracias por preferirnos!" << endl;
+
+            case 8:
+
+                // Tiempo promedio de espera en restaurante de las que no han sido despachadas
+                cout << endl << "Tiempo de espera de ordenes en restaurante no despachadas: ";
+                waitTime(hOrder);
+
             break;
-        default:
+
+            case 9:
+
+                // Cancelar orden a domicilio o restaurante, solo admin
+                if(isAdmin == true){
+
+                    cout << "¿Que tipo de orden desea cancelar? \n 1. A domicilio\n 2.Restaurante\n Su opcion: " << endl;
+                    cin >> orderType; cin.ignore();
+                    while(orderType != 1 && orderType != 2){
+                        cout << "Opcion invalida, escriba 1 para a domicilio y 2 para restaurante: "; cin >> orderType; cin.ignore();
+                    }
+                    if(orderType == 1){
+                        if(delOrder.empty()){
+                            cout << endl << "No se han agregado ordenes a domicilio nuevas" << endl;
+                        }
+                        else{
+                            cout << "¿Que numero de orden desea cancelar? " << endl;
+                            cin >> cancelidD; cin.ignore();
+                            cancelOrder(delOrder, cancelidD);
+                        }
+                    }
+                    else{
+                        if(hOrder.empty()){
+                            cout << endl << "No se han agregado ordenes en restaurante nuevas" << endl;
+                        }
+                        else{
+                            cout << "¿Que numero de orden desea cancelar? " << endl;
+                            cin >> cancelidH; cin.ignore();
+                            cancelOrder(hOrder, cancelidH);           
+                        }
+                    }
+                    
+                }
+
+                else{
+                    cout << endl << "No tiene suficientes permisos!" << endl;
+                }
+            
+            break;
+
+            case 10:
+
+                // Calcular total de ventas a domicilio + restaurante ordenes despachadas 2 vectores aux sumados de total
+                total(delDone, hDone);
+
+            break;
+        
+            case 11:
+
+                // Cambiar de usuario
+                cout << endl << "CAMBIAR DE USUARIO" << endl;
+                if (!loginUser()) 
+                    return 0;
+
+            break;
+
+            case 12:
+
+                // Mensaje de salida
+                cout << "Salida exitosa, gracias por preferirnos!" << endl;
+
+            break;
+
+            default:
+
             cout << "Opcion invalida" << endl;
+            
             break;
         }
 
