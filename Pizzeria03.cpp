@@ -1,10 +1,11 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <cmath>
-#include <string>
+// Librerias utilizadas
+#include <iostream> // Cout y cin
+#include <vector> // Para crear listas y utilizar las funciones de la libreria vector
+#include <algorithm> 
+#include <cmath> // Para utilizar ceiling
+#include <string> // Para utilizar strings en el programa
 
-// Declaracion de un define
+// Declaracion de un define para la contraseña del administrador
 #define PASSWORD "header"
 
 using namespace std;
