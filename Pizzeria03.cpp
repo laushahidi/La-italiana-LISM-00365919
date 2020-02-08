@@ -187,7 +187,7 @@ int main(void)
                 // Cancelar orden a domicilio o restaurante, solo admin
                 if(isAdmin == true){
 
-                    cout << "¿Que tipo de orden desea cancelar? \n 1. A domicilio\n 2. Restaurante\n Su opcion: " << endl;
+                    cout << "¿Que tipo de orden desea cancelar? \n 1. A domicilio\n 2. Restaurante\n Su opcion: ";
                     cin >> orderType; cin.ignore();
                     while(orderType != 1 && orderType != 2){
                         cout << "Opcion invalida, escriba 1 para a domicilio y 2 para restaurante: "; cin >> orderType; cin.ignore();
@@ -485,7 +485,7 @@ void seeOrders(int pos, vector <delivery> &delOrder){
     if(pos == delOrder.size())
         return;
     else{
-        cout << endl << "\tORDEN " << delOrder[pos].deliveryInfo.idOrder << ": " << endl;
+        cout << endl << "\tORDEN " << delOrder[pos].deliveryInfo.idOrder << ": --------------------------------------------------------------" << endl;
         cout << endl << "Nombre:\t" << delOrder[pos].deliveryInfo.name << endl;
         cout << "Telefono: " << delOrder[pos].cellphone << endl;
         cout << endl << "--- DIRECCION ---" << endl;
@@ -511,9 +511,16 @@ void seeOrders(int pos, vector <delivery> &delOrder){
 
         cout << endl << "Numero de orden: " << delOrder[pos].deliveryInfo.idOrder << endl;
 
-        cout << endl << "Tipo de pago: " << delOrder[pos].deliveryInfo.pay << endl;
+        cout << endl << "Tipo de pago: ";
 
-        cout << endl << "Monto: " << delOrder[pos].deliveryInfo.total << endl;
+        if(delOrder[pos].deliveryInfo.pay == cash)
+            cout << "Efectivo" << endl;
+        
+        else
+            cout << "Tarjeta" << endl;
+        
+        cout << endl << "Monto: $" << delOrder[pos].deliveryInfo.total << endl;
+        cout << "Total con IVA: $" << (delOrder[pos].deliveryInfo.total * 1.13) << endl;
         cout << "Tiempo de espera en minutos: " << ceil(delOrder[pos].deliveryInfo.waitingTime) << endl;
         return seeOrders(pos + 1, delOrder);
     }
@@ -526,7 +533,7 @@ void seeOrders(int pos, vector <houseOrder> &hOrder){
     if(pos == hOrder.size())
         return;
     else{
-        cout << endl << "\tORDEN " << hOrder[pos].houseInfo.idOrder << ": " << endl;
+        cout << endl << "\tORDEN " << hOrder[pos].houseInfo.idOrder << ": --------------------------------------------------------------" << endl;
         cout << endl << "Nombre:\t" << hOrder[pos].houseInfo.name << endl;
         
         cout << endl << "--- ENTRADAS ---" << endl;
@@ -546,9 +553,16 @@ void seeOrders(int pos, vector <houseOrder> &hOrder){
 
         cout << endl << "Numero de orden: " << hOrder[pos].houseInfo.idOrder << endl;
 
-        cout << endl << "Tipo de pago: " << hOrder[pos].houseInfo.pay << endl;
+        cout << endl << "Tipo de pago: ";
 
-        cout << endl << "Monto: " << hOrder[pos].houseInfo.total << endl;
+        if(hOrder[pos].houseInfo.pay == cash)
+            cout << "Efectivo" << endl;
+        
+        else
+            cout << "Tarjeta" << endl;
+
+        cout << endl << "Monto: $" << hOrder[pos].houseInfo.total << endl;
+        cout << "Total con IVA: $" << (hOrder[pos].houseInfo.total * 1.13) << endl;
         cout << "Tiempo de espera en minutos: " << ceil(hOrder[pos].houseInfo.waitingTime) << endl;
         return seeOrders(pos + 1, hOrder);
     }
