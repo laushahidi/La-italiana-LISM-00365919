@@ -282,6 +282,7 @@ int main(void)
 bool loginUser(void){
 
     string enterPass = "";
+    string adminName;
     char option;
     cout << "A - Administrador" << endl;
     cout << "E - Empleado" << endl;
@@ -292,6 +293,9 @@ bool loginUser(void){
 
         case 'a':
         case 'A':
+            cin.ignore();
+            cout << endl << "Nombre de usuario: \t";
+            getline(cin, adminName);
             cout << endl << "Digite contraseña: \t";
             cin >> enterPass;
 
