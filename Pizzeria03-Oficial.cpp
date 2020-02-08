@@ -7,7 +7,6 @@
 
 // Declaracion de un define para la contraseña del administrador
 #define PASSWORD "header"
-
 using namespace std;
 
 // Utilizando enum para el tipo de pago
@@ -118,6 +117,7 @@ int main(void)
             case 3:
 
                 // Ver ordenes a domicilio
+                // If para comprobar si la lista esta vacia o no
                 if(delOrder.empty()){
                     cout << endl << "\tNo se han agregado nuevas ordenes a domicilio.." << endl;
                 }
@@ -130,6 +130,7 @@ int main(void)
             case 4:
 
                 // Ver ordenes en restaurante
+                // If para comprobar si la lista esta vacia o no
                 if(hOrder.empty()){
                     cout << endl << "\tNo se han agregado nuevas ordenes en restaurante.." << endl;
                 }
@@ -142,6 +143,7 @@ int main(void)
             case 5:
 
                 // Despachar ordenes a domicilio segun numero de orden
+                // If para comprobar si la lista esta vacia o no
                 if(delOrder.empty()){
                     cout << endl << "\t¡No hay ordenes a domicilio en espera!" << endl;
                 }
@@ -156,6 +158,7 @@ int main(void)
             case 6:
 
                 // Despachar ordenes en restaurante segun numero de orden
+                // If para comprobar si la lista esta vacia o no
                 if(hOrder.empty()){
                     cout << endl << "\t¡No hay ordenes de restaurante en espera!" << endl;
                 }
@@ -170,6 +173,7 @@ int main(void)
             case 7:
 
                 // Tiempo promedio de espera a domicilio de las que no han sido despachadas
+                // If para comprobar si la lista esta vacia o no
                 if(delOrder.empty()){
                     cout << endl << "\t¡No hay ordenes a domicilio en espera!" << endl;
                 }
@@ -183,6 +187,7 @@ int main(void)
             case 8:
 
                 // Tiempo promedio de espera en restaurante de las que no han sido despachadas
+                // If para comprobar si la lista esta vacia o no
                 if(hOrder.empty()){
                     cout << endl << "\t¡No hay ordenes de restaurante en espera!" << endl;
                 }
@@ -204,6 +209,8 @@ int main(void)
                         cout << "\tOpcion invalida, escriba 1 para a domicilio y 2 para restaurante:\t"; cin >> orderType; cin.ignore();
                     }
                     if(orderType == 1){
+
+                        // If para comprobar si la lista esta vacia o no
                         if(delOrder.empty()){
                             cout << endl << "\t¡No se han agregado ordenes a domicilio nuevas!" << endl;
                         }
@@ -214,6 +221,8 @@ int main(void)
                         }
                     }
                     else{
+
+                        // If para comprobar si la lista esta vacia o no
                         if(hOrder.empty()){
                             cout << endl << "\t¡No se han agregado ordenes en restaurante nuevas!" << endl;
                         }
@@ -227,6 +236,8 @@ int main(void)
                 }
 
                 else{
+                    
+                    // Si el usuario es empleado se muestra este mensaje
                     cout << endl << "\t¡No tiene suficientes permisos!" << endl;
                 }
             
@@ -234,7 +245,7 @@ int main(void)
 
             case 10:
 
-                // Calcular total de ventas a domicilio + restaurante ordenes despachadas 2 vectores aux sumados de total
+                // Calcular total de ventas a domicilio + restaurante de ordenes despachadas mas IVA
                 total(delDone, hDone);
 
             break;
@@ -257,7 +268,7 @@ int main(void)
 
             default:
 
-            cout << endl << "\t¡Opcion invalida!" << endl;
+                cout << endl << "\t¡Opcion invalida!" << endl;
 
             break;
         }
