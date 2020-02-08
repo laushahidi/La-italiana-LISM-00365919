@@ -624,6 +624,7 @@ void waitTime(vector <delivery> &delOrder){
         waitingTimeTotal += delOrder[i].deliveryInfo.waitingTime;
     }
     cout << fixed << setprecision(0) << ceil(waitingTimeTotal) << " minutos" << endl;
+    cout << endl << "Tiempo de espera promedio: " << ceil(waitingTimeTotal / delOrder.size()) << " minutos" << endl;
 }
 
 // Funcion para calcular el tiempo de espera para las ordenes pendientes de restaurante
@@ -634,7 +635,9 @@ void waitTime(vector <houseOrder> &hOrder){
     for(int i = 0; i < hOrder.size(); i++){
         waitingTimeTotal += hOrder[i].houseInfo.waitingTime;
     }
+
     cout << fixed << setprecision(0) << ceil(waitingTimeTotal) << " minutos" << endl;
+    cout << endl << "Tiempo de espera promedio: " << ceil(waitingTimeTotal / hOrder.size()) << " minutos" << endl;
 }
 
 // Funcion para cancelar ordenes a domicilio segun numero de orden
