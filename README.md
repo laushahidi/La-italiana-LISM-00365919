@@ -470,26 +470,26 @@
     <p>
         <em>¿Qué aprendí con la realización de este proyecto?</em>
         <br>
-        <small>XXXXXXXXXXX</small>
+        <small>Aprendí a buscar información, a llevar en orden la estructura del programa, a utilizar recursión, enum, registros y pilas. </small>
     </p>
     <p>
         <em>¿Qué fue lo más difícil de implementar?</em>
         <br>
-        <small>XXXXXXXXXXX</small>
+        <small>Recursión y pilas.</small>
     </p>
     <p>
         <em>¿Qué fue lo más fácil de implementar?</em>
         <br>
-        <small>XXXXXXXXXXX</small>
+        <small>Resgitros y enum.</small>
     </p>
     <p>
         <em>¿Qué cambiaría en el desempeño del catedrático?</em>
         <br>
-        <small>XXXXXXXXXXX</small>
+        <small>Me parece muy buena la manera de dar clases, es muy paciente y se toma el tiempo de explicar. Puede dar más ejemplos de programas relacionados a situaciones reales que podamos tener en los trabajos.</small>
     </p>
     <p>
         <em>¿Qué cambiaría en el desempeño del instructor?</em>
         <br>
-        <small>XXXXXXXXXXX</small>
+        <small>Se nota que posee mucho conocimiento y ha dado muy bien los temas. Ir un poco más despacio en las explicaciones, ya que mientras copiabamos los códigos era algo difícil captar las explicaciones.</small>
     </p>
 </dl>
