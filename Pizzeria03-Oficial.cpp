@@ -5,6 +5,7 @@
 #include <string> // Para utilizar strings en el programa
 #include <iomanip> // Para redondear a dos decimales los montos
 
+
 // Declaracion de un define para la contraseña del administrador
 #define PASSWORD "header"
 using namespace std;
@@ -12,8 +13,7 @@ using namespace std;
 // Utilizando enum para el tipo de pago
 enum paymentType {cash, card};
 
-// Declaraciones de estructuras
-// Sub estructura para almacenar datos de direccion
+// Declaraciones de estructuras - Sub estructura para almacenar datos de direccion
 struct address
 {
     string settlement, municipality, department;
@@ -716,4 +716,3 @@ void total(vector <delivery> &delDone, vector <houseOrder> &hDone){
     cout << endl << "\tTotal de ordenes despachadas:                    \t$" << fixed << setprecision(2) << totalDel + totalH << endl;
     cout << "\tTotal con IVA:                                       \t$" << fixed << setprecision(2) << (totalDel + totalH) * 1.13 << endl;
 }
-
