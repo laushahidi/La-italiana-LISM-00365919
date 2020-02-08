@@ -88,7 +88,7 @@ int main(void)
     int option = 0;
 
     // Verificacion para iniciar sesion
-    cout << endl << "\t--- LA PIZZERIA ---" << endl << endl;
+    cout << endl << "--- PIZZERIA LA ITALIANA ---" << endl << endl;
     cout << "\tINICIO DE SESION" << endl << endl;
     if (!loginUser()) 
         return 0;
@@ -175,7 +175,7 @@ int main(void)
                     cout << endl << "\tNo hay ordenes en espera." << endl;
                 }
                 else{
-                    cout << endl << "\tTiempo total de espera de ordenes a domicilio no despachadas: ";
+                    cout << endl << "\tTiempo total de espera de ordenes a domicilio no despachadas: \t";
                     waitTime(delOrder);
                 }
 
@@ -188,7 +188,7 @@ int main(void)
                     cout << endl << "\tNo hay ordenes en espera." << endl;
                 }
                 else{
-                    cout << endl << "\tTiempo total de espera de ordenes en restaurante no despachadas: ";
+                    cout << endl << "\tTiempo total de espera de ordenes en restaurante no despachadas: \t";
                     waitTime(hOrder);
                 }
                 
@@ -199,17 +199,17 @@ int main(void)
                 // Cancelar orden a domicilio o restaurante, solo admin
                 if(isAdmin == true){
 
-                    cout << endl << "¿Que tipo de orden desea cancelar? \n\n 1. A domicilio\n 2. Restaurante\n Su opcion: ";
+                    cout << endl << "¿Que tipo de orden desea cancelar? \n\n 1. A domicilio\n 2. Restaurante\n Su opcion:\t";
                     cin >> orderType; cin.ignore();
                     while(orderType != 1 && orderType != 2){
-                        cout << "\tOpcion invalida, escriba 1 para a domicilio y 2 para restaurante: "; cin >> orderType; cin.ignore();
+                        cout << "\tOpcion invalida, escriba 1 para a domicilio y 2 para restaurante:\t"; cin >> orderType; cin.ignore();
                     }
                     if(orderType == 1){
                         if(delOrder.empty()){
                             cout << endl << "\tNo se han agregado ordenes a domicilio nuevas" << endl;
                         }
                         else{
-                            cout << endl << "\t¿Que numero de orden desea cancelar? " << endl;
+                            cout << endl << "\t¿Que numero de orden desea cancelar?:\t" << endl;
                             cin >> cancelidD; cin.ignore();
                             cancelOrder(delOrder, cancelidD);
                         }
@@ -219,7 +219,7 @@ int main(void)
                             cout << endl << "\tNo se han agregado ordenes en restaurante nuevas" << endl;
                         }
                         else{
-                            cout << "\t¿Que numero de orden desea cancelar? " << endl;
+                            cout << "\t¿Que numero de orden desea cancelar?:\t" << endl;
                             cin >> cancelidH; cin.ignore();
                             cancelOrder(hOrder, cancelidH);           
                         }
@@ -340,7 +340,7 @@ void addOrder(vector <delivery> &delOrder)
     int aux = 0;
     cout << endl << "Nombre:\t";
     getline(cin, oneOrder.deliveryInfo.name);
-    cout << "Telefono: ";
+    cout << "Telefono:\t";
     cin >> oneOrder.cellphone;
     cin.ignore();
     cout << endl << "--- DIRECCION ---" << endl << endl;
@@ -635,7 +635,7 @@ void waitTime(vector <delivery> &delOrder){
         waitingTimeTotal += delOrder[i].deliveryInfo.waitingTime;
     }
     cout << fixed << setprecision(0) << ceil(waitingTimeTotal) << " minutos" << endl;
-    cout << endl << "\tTiempo de espera promedio: " << ceil(waitingTimeTotal / delOrder.size()) << " minutos" << endl;
+    cout << endl << "\tTiempo de espera promedio:\t" << ceil(waitingTimeTotal / delOrder.size()) << " minutos" << endl;
 }
 
 // Funcion para calcular el tiempo de espera para las ordenes pendientes de restaurante
@@ -648,7 +648,7 @@ void waitTime(vector <houseOrder> &hOrder){
     }
 
     cout << fixed << setprecision(0) << ceil(waitingTimeTotal) << " minutos" << endl;
-    cout << endl << "\tTiempo de espera promedio: " << ceil(waitingTimeTotal / hOrder.size()) << " minutos" << endl;
+    cout << endl << "\tTiempo de espera promedio:\t" << ceil(waitingTimeTotal / hOrder.size()) << " minutos" << endl;
 }
 
 // Funcion para cancelar ordenes a domicilio segun numero de orden
@@ -694,16 +694,16 @@ void total(vector <delivery> &delDone, vector <houseOrder> &hDone){
     for(int i = 0; i < delDone.size(); i++){
         totalDel += delDone[i].deliveryInfo.total;
     }
-    cout << endl << "\tMonto total de ordenes despachadas a domicilio: $" << fixed << setprecision(2) << totalDel << endl;
-    cout << "\tTotal con IVA: $" << fixed << setprecision(2) << totalDel * 1.13 << endl;
+    cout << endl << "\tMonto total de ordenes despachadas a domicilio:\t$" << fixed << setprecision(2) << totalDel << endl;
+    cout << "\tTotal con IVA:\t$" << fixed << setprecision(2) << totalDel * 1.13 << endl;
 
     for(int i = 0; i < hDone.size(); i++){
         totalH += hDone[i].houseInfo.total;
     }
-    cout << endl << "\tMonto total de ordenes despachadas en restaurante: $" << fixed << setprecision(2) << totalH << endl;
-    cout << "\tTotal con IVA: $" << fixed << setprecision(2) << totalH * 1.13 << endl;
+    cout << endl << "\tMonto total de ordenes despachadas en restaurante:\t$" << fixed << setprecision(2) << totalH << endl;
+    cout << "\tTotal con IVA:\t$" << fixed << setprecision(2) << totalH * 1.13 << endl;
 
-    cout << endl << "\tTotal de ordenes despachadas: $" << fixed << setprecision(2) << totalDel + totalH << endl;
-    cout << "\tTotal con IVA: $" << fixed << setprecision(2) << (totalDel + totalH) * 1.13 << endl;
+    cout << endl << "\tTotal de ordenes despachadas:\t$" << fixed << setprecision(2) << totalDel + totalH << endl;
+    cout << "\tTotal con IVA:\t$" << fixed << setprecision(2) << (totalDel + totalH) * 1.13 << endl;
 }
 

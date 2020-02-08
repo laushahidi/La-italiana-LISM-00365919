@@ -1,5 +1,5 @@
 <dl>
-    <h1>Pizzería <strong>LA PIZZERIA</strong></h1>
+    <h1>Pizzería <strong>La Italiana</strong></h1>
     <h3><strong>Sumario</strong></h3>
     <hr>
     <ol>
