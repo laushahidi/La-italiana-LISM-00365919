@@ -4,6 +4,7 @@
 #include <algorithm> 
 #include <cmath> // Para utilizar ceiling
 #include <string> // Para utilizar strings en el programa
+#include <iomanip> // Para redondear a dos decimales los montos
 
 // Declaracion de un define para la contraseña del administrador
 #define PASSWORD "header"
@@ -394,11 +395,11 @@ void addOrder(vector <delivery> &delOrder)
         oneOrder.deliveryInfo.pay = cash;
 
     oneOrder.deliveryInfo.total = ((oneOrder.deliveryInfo.qGarlic * 3.99) + (oneOrder.deliveryInfo.qPizzaRolls * 4.99) + (oneOrder.deliveryInfo.qCheese * 3.75) + (oneOrder.deliveryInfo.qPizza * 13.99) + (oneOrder.deliveryInfo.qPasta * 5.55) + (oneOrder.deliveryInfo.qLasagna * 6.25) + (oneOrder.deliveryInfo.qBeer * 1.99) + (oneOrder.deliveryInfo.qSoda * 0.95) + (oneOrder.deliveryInfo.qTea *1.15));
-    cout << endl << "Monto: $" << oneOrder.deliveryInfo.total << endl;
-    cout << "Total con IVA: $" << (oneOrder.deliveryInfo.total * 1.13) << endl;
+    cout << endl << "Monto: $" << fixed << setprecision(2) << oneOrder.deliveryInfo.total << endl;
+    cout << "Total con IVA: $" << fixed << setprecision(2) << (oneOrder.deliveryInfo.total * 1.13) << endl;
     cout << endl << "Numero de orden: " << oneOrder.deliveryInfo.idOrder << endl;
     oneOrder.deliveryInfo.waitingTime = (((oneOrder.deliveryInfo.qGarlic + oneOrder.deliveryInfo.qPizzaRolls + oneOrder.deliveryInfo.qCheese) * 1.10) + ((oneOrder.deliveryInfo.qPizza + oneOrder.deliveryInfo.qPasta + oneOrder.deliveryInfo.qLasagna) * 1.5) + ((oneOrder.deliveryInfo.qBeer + oneOrder.deliveryInfo.qSoda + oneOrder.deliveryInfo.qTea) * 1.35) + 15);
-    cout << "Tiempo de espera en minutos: " << ceil(oneOrder.deliveryInfo.waitingTime) << endl;
+    cout << "Tiempo de espera en minutos: " << fixed << setprecision(0) << ceil(oneOrder.deliveryInfo.waitingTime) << endl;
     delOrder.push_back(oneOrder);
 
     //Domicilio: (cantidad de entradas * 1.10 + cantidad de platos principales * 1.5 + cantidad de bebidas * 1.35) + 15
@@ -469,12 +470,12 @@ void addOrder(vector <houseOrder> &hOrder){
         oneOrder.houseInfo.pay = cash;
 
     oneOrder.houseInfo.total = ((oneOrder.houseInfo.qGarlic * 3.99) + (oneOrder.houseInfo.qPizzaRolls * 4.99) + (oneOrder.houseInfo.qCheese * 3.75) + (oneOrder.houseInfo.qPizza * 13.99) + (oneOrder.houseInfo.qPasta * 5.55) + (oneOrder.houseInfo.qLasagna * 6.25) + (oneOrder.houseInfo.qBeer * 1.99) + (oneOrder.houseInfo.qSoda * 0.95) + (oneOrder.houseInfo.qTea *1.15));
-    cout << endl << "Monto: $" << oneOrder.houseInfo.total << endl;
-    cout << "Total con IVA: $" << (oneOrder.houseInfo.total * 1.13) << endl;
+    cout << endl << "Monto: $" << fixed << setprecision(2) << oneOrder.houseInfo.total << endl;
+    cout << "Total con IVA: $" << fixed << setprecision(2) << (oneOrder.houseInfo.total * 1.13) << endl;
     cout << endl << "Numero de orden: " << oneOrder.houseInfo.idOrder << endl;
 
     oneOrder.houseInfo.waitingTime = (((oneOrder.houseInfo.qGarlic + oneOrder.houseInfo.qPizzaRolls + oneOrder.houseInfo.qCheese) * 1.10) + ((oneOrder.houseInfo.qPizza + oneOrder.houseInfo.qPasta + oneOrder.houseInfo.qLasagna) * 1.5) + ((oneOrder.houseInfo.qBeer + oneOrder.houseInfo.qSoda + oneOrder.houseInfo.qTea) * 1.35));
-    cout << "Tiempo de espera en minutos: " << ceil(oneOrder.houseInfo.waitingTime) << endl;
+    cout << "Tiempo de espera en minutos: " << fixed << setprecision(0) << ceil(oneOrder.houseInfo.waitingTime) << endl;
     hOrder.push_back(oneOrder);
     //Restaurante: (cantidad de entradas * 1.10 + cantidad de platos principales * 1.5 + cantidad de bebidas * 1.35)
 
@@ -519,9 +520,9 @@ void seeOrders(int pos, vector <delivery> &delOrder){
         else
             cout << "Tarjeta" << endl;
         
-        cout << endl << "Monto: $" << delOrder[pos].deliveryInfo.total << endl;
-        cout << "Total con IVA: $" << (delOrder[pos].deliveryInfo.total * 1.13) << endl;
-        cout << "Tiempo de espera en minutos: " << ceil(delOrder[pos].deliveryInfo.waitingTime) << endl;
+        cout << endl << "Monto: $" << fixed << setprecision(2) << delOrder[pos].deliveryInfo.total << endl;
+        cout << "Total con IVA: $" << fixed << setprecision(2) << (delOrder[pos].deliveryInfo.total * 1.13) << endl;
+        cout << "Tiempo de espera en minutos: " << fixed << setprecision(0) << ceil(delOrder[pos].deliveryInfo.waitingTime) << endl;
         return seeOrders(pos + 1, delOrder);
     }
 
@@ -561,9 +562,9 @@ void seeOrders(int pos, vector <houseOrder> &hOrder){
         else
             cout << "Tarjeta" << endl;
 
-        cout << endl << "Monto: $" << hOrder[pos].houseInfo.total << endl;
-        cout << "Total con IVA: $" << (hOrder[pos].houseInfo.total * 1.13) << endl;
-        cout << "Tiempo de espera en minutos: " << ceil(hOrder[pos].houseInfo.waitingTime) << endl;
+        cout << endl << "Monto: $" << fixed << setprecision(2) << hOrder[pos].houseInfo.total << endl;
+        cout << "Total con IVA: $" << fixed << setprecision(2) << (hOrder[pos].houseInfo.total * 1.13) << endl;
+        cout << "Tiempo de espera en minutos: " << fixed << setprecision(0) << ceil(hOrder[pos].houseInfo.waitingTime) << endl;
         return seeOrders(pos + 1, hOrder);
     }
 }
@@ -622,7 +623,7 @@ void waitTime(vector <delivery> &delOrder){
     for(int i = 0; i < delOrder.size(); i++){
         waitingTimeTotal += delOrder[i].deliveryInfo.waitingTime;
     }
-    cout << ceil(waitingTimeTotal) << " minutos" << endl;
+    cout << fixed << setprecision(0) << ceil(waitingTimeTotal) << " minutos" << endl;
 }
 
 // Funcion para calcular el tiempo de espera para las ordenes pendientes de restaurante
@@ -633,7 +634,7 @@ void waitTime(vector <houseOrder> &hOrder){
     for(int i = 0; i < hOrder.size(); i++){
         waitingTimeTotal += hOrder[i].houseInfo.waitingTime;
     }
-    cout << ceil(waitingTimeTotal) << " minutos" << endl;
+    cout << fixed << setprecision(0) << ceil(waitingTimeTotal) << " minutos" << endl;
 }
 
 // Funcion para cancelar ordenes a domicilio segun numero de orden
@@ -679,16 +680,16 @@ void total(vector <delivery> &delDone, vector <houseOrder> &hDone){
     for(int i = 0; i < delDone.size(); i++){
         totalDel += delDone[i].deliveryInfo.total;
     }
-    cout << endl << "Monto total de ordenes despachadas a domicilio: $" << totalDel << endl;
-    cout << "Total con IVA: $" << totalDel * 1.13 << endl;
+    cout << endl << "Monto total de ordenes despachadas a domicilio: $" << fixed << setprecision(2) << totalDel << endl;
+    cout << "Total con IVA: $" << fixed << setprecision(2) << totalDel * 1.13 << endl;
 
     for(int i = 0; i < hDone.size(); i++){
         totalH += hDone[i].houseInfo.total;
     }
-    cout << endl << "Monto total de ordenes despachadas en restaurante: $" << totalH << endl;
-    cout << "Total con IVA: $" << totalH * 1.13 << endl;
+    cout << endl << "Monto total de ordenes despachadas en restaurante: $" << fixed << setprecision(2) << totalH << endl;
+    cout << "Total con IVA: $" << fixed << setprecision(2) << totalH * 1.13 << endl;
 
-    cout << endl << "Total de ordenes despachadas: $" << totalDel + totalH << endl;
-    cout << "Total con IVA: $" << (totalDel + totalH) * 1.13 << endl;
+    cout << endl << "Total de ordenes despachadas: $" << fixed << setprecision(2) << totalDel + totalH << endl;
+    cout << "Total con IVA: $" << fixed << setprecision(2) << (totalDel + totalH) * 1.13 << endl;
 }
 
