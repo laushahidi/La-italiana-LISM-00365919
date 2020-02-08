@@ -503,7 +503,7 @@ void addOrder(vector <houseOrder> &hOrder){
 
 // Funcion para mostrar las ordenes en espera a domicilio
 void seeOrders(int pos, vector <delivery> &delOrder){
-    
+
     if(pos == delOrder.size())
         return;
     else{
@@ -592,7 +592,7 @@ void seeOrders(int pos, vector <houseOrder> &hOrder){
 void done(vector <delivery> &delOrder, vector <delivery> &delDone, int id){
 
     cout << endl << "\tDespachando orden a domicilio.." << endl;
-    // for o while !empty
+    
     int i = 0;
     int flag = 0;
     for(auto iter = delOrder.begin(); iter <= delOrder.end(); iter++){
@@ -615,7 +615,7 @@ void done(vector <delivery> &delOrder, vector <delivery> &delDone, int id){
 void done(vector <houseOrder> &hOrder, vector <houseOrder> &hDone, int id){
 
     cout << endl << "\tDespachando orden en restaurante.." << endl;
-    // for o while !empty
+    
     int i = 0;
     int flag = 0;
     for(auto iter = hOrder.begin(); iter <= hOrder.end(); ++iter){
