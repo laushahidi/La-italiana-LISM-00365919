@@ -494,7 +494,6 @@ void addOrder(vector <houseOrder> &hOrder){
     cout << endl << "Monto:  \t$" << fixed << setprecision(2) << oneOrder.houseInfo.total << endl;
     cout << "Total con IVA:\t$" << fixed << setprecision(2) << (oneOrder.houseInfo.total * 1.13) << endl;
     cout << endl << "Numero de orden:        \t" << oneOrder.houseInfo.idOrder << endl;
-
     oneOrder.houseInfo.waitingTime = (((oneOrder.houseInfo.qGarlic + oneOrder.houseInfo.qPizzaRolls + oneOrder.houseInfo.qCheese) * 1.10) + ((oneOrder.houseInfo.qPizza + oneOrder.houseInfo.qPasta + oneOrder.houseInfo.qLasagna) * 1.5) + ((oneOrder.houseInfo.qBeer + oneOrder.houseInfo.qSoda + oneOrder.houseInfo.qTea) * 1.35));
     cout << "Tiempo de espera en minutos:  \t" << fixed << setprecision(0) << ceil(oneOrder.houseInfo.waitingTime) << endl;
     hOrder.push_back(oneOrder);
@@ -504,6 +503,7 @@ void addOrder(vector <houseOrder> &hOrder){
 
 // Funcion para mostrar las ordenes en espera a domicilio
 void seeOrders(int pos, vector <delivery> &delOrder){
+    
     if(pos == delOrder.size())
         return;
     else{
@@ -532,7 +532,6 @@ void seeOrders(int pos, vector <delivery> &delOrder){
         cout << "Te helado. Cantidad: \t" << delOrder[pos].deliveryInfo.qTea << endl;
 
         cout << endl << "Numero de orden:\t" << delOrder[pos].deliveryInfo.idOrder << endl;
-
         cout << endl << "Tipo de pago:\t";
 
         if(delOrder[pos].deliveryInfo.pay == cash)
@@ -574,7 +573,6 @@ void seeOrders(int pos, vector <houseOrder> &hOrder){
         cout << "Te helado. Cantidad: \t" << hOrder[pos].houseInfo.qTea << endl;
 
         cout << endl << "Numero de orden:\t" << hOrder[pos].houseInfo.idOrder << endl;
-
         cout << endl << "Tipo de pago:\t";
 
         if(hOrder[pos].houseInfo.pay == cash)
